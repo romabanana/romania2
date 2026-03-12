@@ -1,3 +1,25 @@
+# Godot cache
+.import/
 .godot/
-*.translation
+
+# Export builds
+export/
+build/
+
+# Temporary files
+*.tmp
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor backups
+*~
+
+# Mono / C# (if you use it)
+.mono/
+data_*/
+
+#
+*.translationi
 export_presets.cfg
