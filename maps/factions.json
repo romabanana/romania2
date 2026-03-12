@@ -1,0 +1,16 @@
+{
+	"0": { "name": "No Faction",   "color": "#ff0000" },
+	"1": { "name": "Central Goverment",   "color": "#00c8ff" },
+	"2": { "name": "Social Provinces",  "color": "#ff8b77" },
+	"3": { "name": "Pussia", "color": "#32ab46" },
+	"4": { "name": "N.F.A.P","color": "#9d9d9d" },
+	"5": { "name": "Neutrality","color": "#9092ca" },
+	"6": { "name": "East","color": "#005865" },
+	"7": { "name": "E.C.C","color": "#a33c2a" },
+	"8": { "name": "West Romania","color": "#d9d95a" },
+	"9": { "name": "East Romania","color": "#d60b00" },
+	"10": { "name": "Iron","color": "#707041" },
+	"11": { "name": "North Kingdom","color": "#aaebff" },
+	"12": { "name": "Other","color": "#ff77f8" }
+	
+}

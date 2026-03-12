@@ -1,0 +1,13 @@
+CanvasLayer
+Label
+ColorRect
+Polygon2D
+TileMapLayer
+VBoxContainer
+MarginContainer
+HSeparator
+PanelContainer
+Sprite2D
+TextureRect
+Node2D
+Camera2D

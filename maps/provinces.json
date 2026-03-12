@@ -1,0 +1,36 @@
+{
+	"000000": { "id": 0, "owner": 0, "name": "Not assigned" },
+	"36ab90": { "id": 1, "owner": 1, "name": "Fire Island" },
+	"dbf065": { "id": 2, "owner": 1, "name": "Capital" },
+	"8f767a": { "id": 3, "owner": 1, "name": "Hitlerland" },
+	"77c632": { "id": 4, "owner": 1, "name": "West Beach" },
+	"5f7a7d": { "id": 5, "owner": 1, "name": "South Beach" },
+	"5a8238": { "id": 6, "owner": 1, "name": "Port H" },
+	"47eb38": { "id": 7, "owner": 1, "name": "Colorado" },
+	"ef9afa": { "id": 8, "owner": 1, "name": "Barbieland" },
+	"942537": { "id": 9, "owner": 1, "name": "South Guandong" },
+	"9b89ff": { "id": 10, "owner": 1, "name": "North Guandong" },
+	"c4e121": { "id": 11, "owner": 1, "name": "Wraclaw" },
+	"27209e": { "id": 12, "owner": 1, "name": "Estrasv" },
+	"ff6980": { "id": 13, "owner": 1, "name": "Center" },
+	"414141": { "id": 14, "owner": 1, "name": "Torchia" },
+	"943ba0": { "id": 15, "owner": 1, "name": "West Torchia" },
+	"32c9b2": { "id": 16, "owner": 1, "name": "East Jan" },
+	"d1374e": { "id": 17, "owner": 1, "name": "West Jan" },
+	"00c8ff": { "id": 18, "owner": 1, "name": "Central Goverment" },
+	"ff8b77": { "id": 19, "owner": 2, "name": "Allie Goverments" },
+	"32ab46": { "id": 20, "owner": 3, "name": "Pussia" },
+	"9d9d9d": { "id": 21, "owner": 4, "name": "Nazis" },
+	"8092ca": { "id": 22, "owner": 5, "name": "Neutral Governments" },
+	"005865": { "id": 23, "owner": 6, "name": "The East" },
+	"a33c2a": { "id": 24, "owner": 7, "name": "East Coast Company" },
+	"d9d95a": { "id": 25, "owner": 8, "name": "West Romania" },
+	"d60b00": { "id": 26, "owner": 9, "name": "East Romania" },
+	"707041": { "id": 27, "owner": 10, "name": "Iron" },
+	"aaebff": { "id": 28, "owner": 11, "name": "North Kingdom" },
+	"ff77f8": { "id": 29, "owner": 12, "name": "Other Countries" }
+	
+	
+	
+	
+}

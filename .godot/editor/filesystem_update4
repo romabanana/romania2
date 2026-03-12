@@ -1,0 +1,12 @@
+res://firts.tscn
+res://water.gdshader
+res://crt.gdshader
+res://border.gdshader
+res://pattern.gdshader
+res://clouds.gdshader
+res://crt.gd
+res://division.gd
+res://SelectionManager.gd
+res://fps.gd
+res://firts.gd
+res://maps/provinces.json
