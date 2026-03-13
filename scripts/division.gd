@@ -5,6 +5,8 @@ extends Node2D
 #  Node2D
 #  ├── Sprite2D
 #  └── SelectionCircle (Node2D)
+#
+#  Too dependant on GridManager that has to be changed.
 # ─────────────────────────────────────────
 
 @export var move_speed : float = 0.1   # seconds per tile

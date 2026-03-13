@@ -2,9 +2,10 @@ extends Node
 
 # ─────────────────────────────────────────
 #  GridManager — Autoload
-#  Add this as an Autoload in:
-#  Project → Project Settings → Autoload
-#  Name it: GridManager
+#  This has to be rework.. 
+#  This script manages terrain and movement must be split and also terrain
+#  should be builded in the loop of _load() in main.gd... to be optimal..
+#  Claude's fault...
 # ─────────────────────────────────────────
 
 # ── Enums ──────────────────────────────── 
@@ -138,6 +139,7 @@ func clear_unit(cell: Vector2i) -> void:
 	if grid.has(cell):
 		grid[cell]["unit"] = null
 
+# what is this useful for?
 func get_cells_of_terrain(terrain: Terrain) -> Array:
 	var result := []
 	for cell in grid:

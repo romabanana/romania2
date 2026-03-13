@@ -2,12 +2,12 @@ extends Node
 
 # ─────────────────────────────────────────
 #  PoliticalMap — Autoload
-#  Manages faction ownership and paints
-#  a 256x256 political map texture
+#  A different map size can be set on setup.
+#  
 # ─────────────────────────────────────────
 
 const FACTIONS_PATH : String = "res://data/factions.json"
-const MAP_SIZE      : int    = 256
+var map_size : int = 256
 
 # ── Faction data ─────────────────────────
 # faction_id (int) → { "name", "color" }
@@ -24,12 +24,14 @@ var political_sprite : Sprite2D = null
 # ─────────────────────────────────────────
 #  Init
 # ─────────────────────────────────────────
-func setup(sprite: Sprite2D) -> void:
+func setup(sprite: Sprite2D, map_size_input: int = 256) -> void:
 	political_sprite = sprite
+	map_size = map_size_input
+	
 	_load_factions()
 	_build_texture()
 
-
+# Load the factions from json. Each has a unique id, a name and a color.
 func _load_factions() -> void:
 	if not FileAccess.file_exists(FACTIONS_PATH):
 		push_error("PoliticalMap: no factions.json at " + FACTIONS_PATH)
@@ -50,15 +52,17 @@ func _load_factions() -> void:
 		var entry        = data[key]
 		factions[id] = {
 			"name":  entry["name"],
-			"color": Color(entry["color"])
+			"color": Color(entry["color"]) # "Color"
 		}
 
 	print("PoliticalMap: loaded %d factions" % factions.size())
 
-
+# Creates the image every time. It should save it once and just load it from there.
+# ... what am i seeing
+ 
 func _build_texture() -> void:
 	# create blank transparent 256x256 image
-	political_image = Image.create(MAP_SIZE, MAP_SIZE, false, Image.FORMAT_RGBA8)
+	political_image = Image.create(map_size, map_size, false, Image.FORMAT_RGBA8)
 	political_image.fill(Color(0, 0, 0, 0))
 
 	# create texture
@@ -90,7 +94,7 @@ func set_province_owner(province_id: int, faction_id: int) -> void:
 	var color : Color
 	if faction_id >= 0 and factions.has(faction_id):
 		color = factions[faction_id]["color"]
-		color.a = 0.2
+		color.a = 1
 	else:
 		color = Color(0, 0, 0, 0)   # unowned = transparent
 

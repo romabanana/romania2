@@ -1,5 +1,7 @@
 extends PanelContainer
 
+# UI script
+
 @onready var label_title    : Label = $MarginContainer/VBoxContainer/Title
 @onready var label_name     : Label = $MarginContainer/VBoxContainer/LabelName
 @onready var label_province : Label = $MarginContainer/VBoxContainer/LabelProvince

@@ -9,12 +9,14 @@ extends Camera2D
 #    • Middle-mouse drag panning
 #    • Scroll-wheel zoom (clamped)
 #    • Optional world boundary clamping
+
+#	Thanks Claude :)
 # ─────────────────────────────────────────
 
 # --- Pan settings ---
 @export var pan_speed: float = 600.0          # pixels/sec for keyboard & edge scroll
 @export var edge_scroll_margin: int = 20      # px from screen edge that triggers scroll
-@export var edge_scroll_enabled: bool = false
+@export var edge_scroll_enabled: bool = true
 
 # --- Drag settings ---
 @export var drag_button: MouseButton = MOUSE_BUTTON_RIGHT

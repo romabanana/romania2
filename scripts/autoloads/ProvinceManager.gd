@@ -2,9 +2,10 @@ extends Node
 
 # ─────────────────────────────────────────
 #  ProvinceManager — Autoload
-#  Add this as an Autoload in:
-#  Project → Project Settings → Autoload
-#  Name it: ProvinceManager
+#  This scripts loads the provinces. And gives accessors.
+#  This script is independent of the map size.
+#  
+#  
 # ─────────────────────────────────────────
 
 const PNG_PATH  : String = "res://maps/map_01_provinces.png"
@@ -13,15 +14,18 @@ const JSON_PATH : String = "res://data/provinces.json"
 # ── Main data structures ─────────────────
 
 # Vector2i → province_id
+# It maps tile coords too a province id.
 var province_map : Dictionary = {}
 
 # province_id → province data
+# It maps an province id to its data.
 var provinces : Dictionary = {}
 
 
 # ─────────────────────────────────────────
 #  Load provinces from PNG + JSON
 # ─────────────────────────────────────────
+
 func load_provinces() -> void:
 	province_map.clear()
 	provinces.clear()
@@ -41,10 +45,13 @@ func load_provinces() -> void:
 		return
 
 	# build provinces dictionary from JSON
-	# key in json is "R,G,B" string
+	# key in json is the hexcode string
 	var json_data : Dictionary = json.get_data()
-	var color_to_province : Dictionary = {}  # "R,G,B" → province data
-
+	# Saves the province color for later when reading the png map.
+	var color_to_province : Dictionary = {}  
+	
+	# The province dict will change/ grow over time.
+	
 	for color_key in json_data:
 		var data    : Dictionary = json_data[color_key]
 		var id      : int        = data["id"]
@@ -70,16 +77,23 @@ func load_provinces() -> void:
 
 	var width  := image.get_width()
 	var height := image.get_height()
-
+	
+	# Iterates the png (map) matrix, which is 256x256, therefore 65536 cells.
 	for x in width:
 		for y in height:
 			var pixel     : Color  = image.get_pixel(x, y)
+			# This line reads the color and code it into hexcode string.
 			if pixel.a > 0: #dumb fix to not read the water
 				var color_key : String = "%02x%02x%02x" % [
 					int(pixel.r * 255),
 					int(pixel.g * 255),
 					int(pixel.b * 255)
 				]
+				
+				# If the color was in the json read earlier, then it maps the
+				# cell to its province_id and appends the cell to the provinces
+				# "tiles" array. 
+				
 				if color_to_province.has(color_key):
 					var province_id : int    = color_to_province[color_key]
 					var cell        : Vector2i = Vector2i(x, y)
@@ -116,7 +130,7 @@ func get_province_tiles(id: int) -> Array:
 func get_province_name(id: int) -> String:
 	return provinces.get(id, {}).get("name", "Unknown")
 	
-func get_province_owner(id: int) -> Variant:
+func get_province_owner(id: int) -> Variant: # "Variant"
 	return provinces.get(id, {}).get("owner", null)
 
 func set_province_owner(id: int, province_owner) -> void:

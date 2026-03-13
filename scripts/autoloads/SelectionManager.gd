@@ -2,7 +2,8 @@ extends Node
 
 # ─────────────────────────────────────────
 #  SelectionManager — Autoload
-#  Add as Autoload, name it SelectionManager
+#  This scripts will handle "selection". Right now has many trash of testing.
+#  Too much to think.
 # ─────────────────────────────────────────
 
 var selected_division = null   # current selected Division node
@@ -13,8 +14,6 @@ var selected_division = null   # current selected Division node
 
 func _ready() -> void:
 	await get_tree().process_frame
-	_spawn_test_division(Vector2i(70, 10))
-	_spawn_test_division(Vector2i(140, 11))
 
 func _unhandled_input(event: InputEvent) -> void:
 	
@@ -70,7 +69,7 @@ func _get_clicked_tile() -> Vector2i:
 	var local_pos := tilemap.get_local_mouse_position()
 	return tilemap.local_to_map(local_pos)
 
-
+# Just for testing
 func _spawn_test_division(tile: Vector2i) -> void:
 	if not tilemap:
 		tilemap = get_tree().get_first_node_in_group("terrain_map")

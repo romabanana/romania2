@@ -6,7 +6,6 @@
 [ext_resource type="Shader" uid="uid://b2eebbo6klu8d" path="res://shaders/water.gdshader" id="4_pm3ni"]
 [ext_resource type="Script" uid="uid://di3nx0v6fm5gk" path="res://scripts/water.gd" id="5_y6deb"]
 [ext_resource type="Texture2D" uid="uid://bcbrnvxs7yp36" path="res://assets/tilesets/sat_tileset.png" id="6_og1vs"]
-[ext_resource type="Script" uid="uid://bv2vbr7f13swr" path="res://scripts/clouds.gd" id="7_2wyq8"]
 [ext_resource type="Texture2D" uid="uid://dkngnv72pmv37" path="res://maps/map_01_provinces.png" id="8_vxglm"]
 [ext_resource type="Script" uid="uid://d2cjquai7keav" path="res://scripts/province_sprite.gd" id="9_2f3dj"]
 [ext_resource type="Texture2D" uid="uid://cixu2iuc1s4x4" path="res://maps/political_map.png" id="10_yq6so"]
@@ -1004,9 +1003,9 @@ shader_parameter/border_color = Color(1, 1, 1, 0.8)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_65sq8"]
 shader = ExtResource("18_fuf3a")
-shader_parameter/curvature = 10.0
+shader_parameter/curvature = 8.338000253555
 shader_parameter/scanline_strength = 0.17200000817
-shader_parameter/aberration = 0.00999999977648
+shader_parameter/aberration = 0.0050000002375
 shader_parameter/vignette_strength = 1.0690000507775
 shader_parameter/brightness = 0.678000008455
 
@@ -1034,10 +1033,6 @@ texture_filter = 4
 position = Vector2(-8, -1)
 tile_set = SubResource("TileSet_nxybh")
 
-[node name="Clouds" type="Polygon2D" parent="." unique_id=1889715849]
-visible = false
-script = ExtResource("7_2wyq8")
-
 [node name="ProvinceSprite" type="Sprite2D" parent="." unique_id=1205479713]
 visible = false
 modulate = Color(0.58431375, 0.58431375, 0.58431375, 0.5254902)
@@ -1064,6 +1059,7 @@ centered = false
 script = ExtResource("11_fv21b")
 
 [node name="BorderMap" type="Sprite2D" parent="." unique_id=370670790]
+visible = false
 modulate = Color(0.58431375, 0.58431375, 0.58431375, 0.5254902)
 material = SubResource("ShaderMaterial_0ld40")
 position = Vector2(292, 133.99998)
