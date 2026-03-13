@@ -999,7 +999,7 @@ tile_proxies/coords_level = [[0, Vector2i(0, 0)], [76, Vector2i(0, 0)], [1, Vect
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0ld40"]
 shader = ExtResource("12_tel4y")
 shader_parameter/province_texture = ExtResource("13_gqmmt")
-shader_parameter/border_width = 0.05000000074506
+shader_parameter/border_width = 0.36400001566006
 shader_parameter/border_color = Color(1, 1, 1, 0.8)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_65sq8"]

@@ -1,21 +1,8 @@
 [gd_scene format=3 uid="uid://86o8jhwhxwa2"]
 
-[ext_resource type="Shader" uid="uid://l88apx76rulw" path="res://main.gdshader" id="1_nli1r"]
-[ext_resource type="Texture2D" uid="uid://d0ddsbuwvm60l" path="res://test_tilest_2.png" id="2_hm8ck"]
-[ext_resource type="Texture2D" uid="uid://c3peum27mn25c" path="res://ground.png" id="3_5565n"]
-[ext_resource type="Texture2D" uid="uid://uq0j7qkxh2n6" path="res://my_tiles.png" id="4_fwcsg"]
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1bvp3"]
-shader = ExtResource("1_nli1r")
-shader_parameter/pixel_size = 4.000000142499999
-shader_parameter/scanline_strength = 0.0490000023275
-shader_parameter/scanline_speed = 0.150000007125
-shader_parameter/vignette_strength = 0.0
-shader_parameter/contrast = 2.0
-shader_parameter/color_tint = Color(1, 0.95, 0.85, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1bvp3"]
-texture = ExtResource("2_hm8ck")
 texture_region_size = Vector2i(256, 512)
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(0, 182)
@@ -291,7 +278,6 @@ texture_region_size = Vector2i(256, 512)
 7:1/0/terrains_peering_bit/bottom_left_side = 3
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0xm2m"]
-texture = ExtResource("3_5565n")
 texture_region_size = Vector2i(256, 512)
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(0, 182)
@@ -727,7 +713,6 @@ texture_region_size = Vector2i(256, 512)
 11:3/0/terrains_peering_bit/top_right_side = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h2yge"]
-texture = ExtResource("4_fwcsg")
 texture_region_size = Vector2i(256, 128)
 0:0/0 = 0
 0:0/0/terrain_set = 0

@@ -2,9 +2,7 @@
 extends Node
 
 # ─────────────────────────────────────────
-#  Map Generator
-#  Attach this script to any Node in your
-#  scene that is a parent of TileMapLayer
+# Main  
 # ─────────────────────────────────────────
 
 const GRID_SIZE    := 256
