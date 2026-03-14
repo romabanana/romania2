@@ -41,7 +41,7 @@ var topmap : TileMapLayer :
 	set(value):
 		if value and Engine.is_editor_hint():
 			_load()
-			GridManager.build_from_tilemap(tilemap)
+			MapData.buil(tilemap)
 
 @export var export_png : bool = false :
 	set(value):
@@ -58,7 +58,9 @@ func _ready() -> void:
 	if not Engine.is_editor_hint():
 		_load()
 		ProvinceManager.load_provinces()
-		GridManager.build_from_tilemap(tilemap)
+		MapData.build(tilemap)
+		Pathfinder.build()
+		#GridManager.build_from_tilemap(tilemap)
 		setup_overlay($ProvinceSprite)
 		setup_overlay($PoliticalMap)
 		setup_overlay($BorderMap, 16)

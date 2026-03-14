@@ -18,10 +18,10 @@ func show_division(division) -> void:
 	label_title.text    = "DIVISION"
 	label_name.text     = "Tile: %s" % str(division.current_tile)
 	label_province.text = "Province: %s" % ProvinceManager.get_province_name(
-		GridManager.get_province_id(division.current_tile)
+		MapData.get_province_id(division.current_tile)
 	)
-	label_terrain.text  = "Terrain: %s" % GridManager.TERRAIN_DATA[
-		GridManager.get_terrain(division.current_tile)
+	label_terrain.text  = "Terrain: %s" % MapData.TERRAIN_DATA[
+		MapData.get_terrain(division.current_tile)
 	]["name"]
 	label_status.text   = "Status: %s" % ("Moving" if division.is_moving else "Idle")
 

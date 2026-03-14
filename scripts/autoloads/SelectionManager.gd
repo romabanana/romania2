@@ -33,7 +33,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	# left click — select
 	if event.button_index == MOUSE_BUTTON_LEFT:
-		var unit_on_tile = GridManager.get_cell(clicked_tile).get("unit", null)
+		var unit_on_tile = MapData.get_cell(clicked_tile).get("unit", null)
 		if unit_on_tile != null:
 			_select(unit_on_tile)
 		else:

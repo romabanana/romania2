@@ -17,10 +17,11 @@ config/icon="res://assets/textures/icon.svg"
 
 [autoload]
 
-GridManager="*uid://cbdj3oofuigem"
 ProvinceManager="*uid://bo87kglbrvo0g"
 SelectionManager="*uid://hbj4wxiucpai"
 PoliticalMap="*uid://vfkyr5vpsah0"
+MapData="*uid://c7ii2d14tmyia"
+Pathfinder="*uid://cgy5387eljmbt"
 
 [physics]
 

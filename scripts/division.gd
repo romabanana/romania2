@@ -6,7 +6,6 @@ extends Node2D
 #  ├── Sprite2D
 #  └── SelectionCircle (Node2D)
 #
-#  Too dependant on GridManager that has to be changed.
 # ─────────────────────────────────────────
 
 @export var move_speed : float = 0.1   # seconds per tile
@@ -32,7 +31,7 @@ func init(tile: Vector2i, map: TileMapLayer) -> void:
 	tilemap         = map
 	current_tile    = tile
 	global_position = tilemap.to_global(tilemap.map_to_local(tile))
-	GridManager.set_unit(tile, self)
+	MapData.set_unit(tile, self)
 
 
 func select() -> void:
@@ -48,9 +47,9 @@ func move_to(target_tile: Vector2i) -> void:
 #	if is_moving:
 #		return
 
-	var new_path := GridManager.get_tile_path(current_tile, target_tile)
+	var new_path : Array[Vector2i] = Pathfinder.get_tile_path(current_tile, target_tile)
 	print("from: ", current_tile, " to: ", target_tile, " path: ", new_path)
-	var province_id := GridManager.get_province_id(target_tile)
+	var province_id := MapData.get_province_id(target_tile)
 	print(ProvinceManager.get_province_name(province_id))
 	
 	if new_path.is_empty():
@@ -79,10 +78,10 @@ func _walk_path() -> void:
 
 
 func _move_to_tile(tile: Vector2i) -> void:
-	GridManager.clear_unit(current_tile)
+	MapData.clear_unit(current_tile)
 	current_tile    = tile
 	var target_pos  := tilemap.to_global(tilemap.map_to_local(tile))
-	GridManager.set_unit(tile, self)
+	MapData.set_unit(tile, self)
 
 	if SelectionManager.selected_division == self:
 		var panel = get_tree().get_first_node_in_group("selection_panel")
