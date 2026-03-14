@@ -1003,7 +1003,7 @@ shader_parameter/border_color = Color(1, 1, 1, 0.8)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_65sq8"]
 shader = ExtResource("18_fuf3a")
-shader_parameter/curvature = 8.338000253555
+shader_parameter/curvature = 7.34800020653
 shader_parameter/scanline_strength = 0.17200000817
 shader_parameter/aberration = 0.0050000002375
 shader_parameter/vignette_strength = 1.0690000507775
