@@ -1,0 +1,14 @@
+[remap]
+
+importer="image"
+type="Image"
+uid="uid://bc0h2oby835eg"
+path="res://.godot/imported/data_provinces.png-81a88cb943a487deefb2c0d8f3726c3f.image"
+
+[deps]
+
+source_file="res://maps/data_provinces.png"
+dest_files=["res://.godot/imported/data_provinces.png-81a88cb943a487deefb2c0d8f3726c3f.image"]
+
+[params]
+

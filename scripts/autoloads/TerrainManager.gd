@@ -1,7 +1,7 @@
 extends Node
 
 # ─────────────────────────────────────────
-#  MapData — Autoload
+#  TerrainManager — Autoload
 #  Stores all tile data and terrain queries
 #  
 # ─────────────────────────────────────────
@@ -58,13 +58,9 @@ func build(tilemap: TileMapLayer) -> void:
 
 		grid[cell] = {
 			"terrain":     terrain,
-			"province_id": ProvinceManager.get_province_id(cell),
-			"city_id":     -1,
-			"unit":        null,
-			"structures":  [],
 		}
 
-	print("MapData: built %d cells" % grid.size())
+	print("TerrainManager: built %d cells" % grid.size())
 
 
 # ─────────────────────────────────────────
@@ -84,20 +80,6 @@ func get_move_cost(cell: Vector2i) -> int:
 
 func get_defense_bonus(cell: Vector2i) -> int:
 	return TERRAIN_DATA[get_terrain(cell)]["defense"]
-
-func get_province_id(cell: Vector2i) -> int:
-	return grid.get(cell, {}).get("province_id", -1)
-
-func is_occupied(cell: Vector2i) -> bool:
-	return grid.get(cell, {}).get("unit", null) != null
-
-func set_unit(cell: Vector2i, unit) -> void:
-	if grid.has(cell):
-		grid[cell]["unit"] = unit
-
-func clear_unit(cell: Vector2i) -> void:
-	if grid.has(cell):
-		grid[cell]["unit"] = null
 
 func get_cells_of_terrain(terrain: Terrain) -> Array:
 	var result := []

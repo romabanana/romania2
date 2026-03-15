@@ -10,23 +10,23 @@ var astar : AStar2D = AStar2D.new()
 
 
 # ─────────────────────────────────────────
-#  Build from MapData
-#  Call after MapData.build()
+#  Build from TerrainManager
+#  Call after TerrainManager.build()
 # ─────────────────────────────────────────
 func build() -> void:
 	astar.clear()
 
 	# add all passable points
-	for cell in MapData.grid:
-		if MapData.is_passable(cell):
+	for cell in TerrainManager.grid:
+		if TerrainManager.is_passable(cell):
 			astar.add_point(_id(cell), Vector2(cell))
 
 	# connect 8 isometric neighbors
-	for cell in MapData.grid:
-		if not MapData.is_passable(cell):
+	for cell in TerrainManager.grid:
+		if not TerrainManager.is_passable(cell):
 			continue
 		for neighbor in _neighbors(cell):
-			if MapData.grid.has(neighbor) and MapData.is_passable(neighbor):
+			if TerrainManager.grid.has(neighbor) and TerrainManager.is_passable(neighbor):
 				astar.connect_points(_id(cell), _id(neighbor), true)
 
 	print("Pathfinder: built with %d points" % astar.get_point_count())
@@ -36,7 +36,7 @@ func build() -> void:
 #  Pathfinding
 # ─────────────────────────────────────────
 func get_tile_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
-	if not MapData.is_passable(to) or not MapData.grid.has(to):
+	if not TerrainManager.is_passable(to) or not TerrainManager.grid.has(to):
 		return []
 
 	var id_path := astar.get_id_path(_id(from), _id(to))
@@ -74,4 +74,5 @@ func _id(cell: Vector2i) -> int:
 	return cell.x * 10000 + cell.y
 
 func _cell(id: int) -> Vector2i:
-	return Vector2i(id / 10000, id % 10000)
+	@warning_ignore("integer_division")
+	return Vector2i(id / 100000, id % 100000)

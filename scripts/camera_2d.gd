@@ -28,8 +28,8 @@ extends Camera2D
 @export var zoom_smoothing: float = 5.0      # lerp speed; set 0 for instant
 
 # --- World boundary (optional) ---
-@export var use_limits: bool = false
-@export var limit_rect: Rect2 = Rect2(-2000, -2000, 6000, 6000)
+@export var use_limits: bool = true
+@export var limit_rect: Rect2 = Rect2(-35000, -10000, 70000, 50000)
 
 # ── internal state ──────false────────────────
 var _drag_active: bool = false
@@ -51,7 +51,7 @@ func _process(delta: float) -> void:
 		_clamp_to_limits()
 
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	# ── Middle-mouse drag ──────────────────
 	if event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton

@@ -8,7 +8,7 @@ extends Node
 #  
 # ─────────────────────────────────────────
 
-const PNG_PATH  : String = "res://maps/map_01_provinces.png"
+const PNG_PATH  : String = "res://maps/data_provinces.png"
 const JSON_PATH : String = "res://data/provinces.json"
 
 # ── Main data structures ─────────────────
@@ -69,8 +69,7 @@ func load_provinces() -> void:
 	if not FileAccess.file_exists(PNG_PATH):
 		push_error("ProvinceManager: no PNG at " + PNG_PATH)
 		return
-
-	var image := Image.load_from_file(PNG_PATH)
+	var image := load(PNG_PATH) as Image
 	if not image:
 		push_error("ProvinceManager: failed to load PNG")
 		return

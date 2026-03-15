@@ -6,7 +6,7 @@ extends Node
 #  Too much to think.
 # ─────────────────────────────────────────
 
-var selected_division = null   # current selected Division node
+var selected_unit = null   # current selected Division node
 
 # read from groups
 @onready var tilemap : TileMapLayer = get_tree().get_first_node_in_group("terrain_map")
@@ -14,6 +14,7 @@ var selected_division = null   # current selected Division node
 
 func _ready() -> void:
 	await get_tree().process_frame
+	_spawn_test_unit(Vector2i(20,22))
 
 func _unhandled_input(event: InputEvent) -> void:
 	
@@ -33,7 +34,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	# left click — select
 	if event.button_index == MOUSE_BUTTON_LEFT:
-		var unit_on_tile = MapData.get_cell(clicked_tile).get("unit", null)
+		var unit_on_tile = UnitManager.get_unit_at(clicked_tile)
 		if unit_on_tile != null:
 			_select(unit_on_tile)
 		else:
@@ -41,21 +42,21 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	# right click — move selected unit
 	elif event.button_index == MOUSE_BUTTON_RIGHT:
-		if selected_division != null:
-			selected_division.move_to(clicked_tile)
+		if selected_unit != null:
+			selected_unit.move_to(clicked_tile)
 
 func _select(division) -> void:
-	if selected_division != null:
-		selected_division.deselect()
-	selected_division = division
-	selected_division.select()
+	if selected_unit != null:
+		selected_unit.deselect()
+	selected_unit = division
+	selected_unit.select()
 	selection_panel.show_division(division)
 
 
 func deselect_all() -> void:
-	if selected_division != null:
-		selected_division.deselect()
-	selected_division = null
+	if selected_unit != null:
+		selected_unit.deselect()
+	selected_unit = null
 	selection_panel.hide_panel()
 
 
@@ -70,7 +71,7 @@ func _get_clicked_tile() -> Vector2i:
 	return tilemap.local_to_map(local_pos)
 
 # Just for testing
-func _spawn_test_division(tile: Vector2i) -> void:
+func _spawn_test_unit(tile: Vector2i) -> void:
 	if not tilemap:
 		tilemap = get_tree().get_first_node_in_group("terrain_map")
 
@@ -85,7 +86,7 @@ func _spawn_test_division(tile: Vector2i) -> void:
 	circle.name = "SelectionCircle"
 	division_scene.add_child(circle)
 
-	division_scene.set_script(load("res://scripts/division.gd"))
+	division_scene.set_script(load("res://scripts/unit.gd"))
 	get_tree().current_scene.add_child(division_scene)
 	division_scene.init(tile, tilemap)
 	print("Test division spawned at tile: ", tile)
