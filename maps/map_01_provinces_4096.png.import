@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://qb28uwu154x7"
-path="res://.godot/imported/map_01_provinces_4096.png-0259bbf95a64505e5b3ee23a34e2ba65.ctex"
+path="res://.godot/imported/map_01_provinces_4096.png-d6c55e52eccc422462a4591df640b1c6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scripts/autoloads/map_01_provinces_4096.png"
-dest_files=["res://.godot/imported/map_01_provinces_4096.png-0259bbf95a64505e5b3ee23a34e2ba65.ctex"]
+source_file="res://maps/map_01_provinces_4096.png"
+dest_files=["res://.godot/imported/map_01_provinces_4096.png-d6c55e52eccc422462a4591df640b1c6.ctex"]
 
 [params]
 

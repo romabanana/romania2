@@ -4,15 +4,14 @@
 [ext_resource type="Texture2D" uid="uid://c8jn1o6sbm5n6" path="res://assets/tilesets/test_tilest_3.png" id="3_jscy8"]
 [ext_resource type="Shader" uid="uid://b2eebbo6klu8d" path="res://shaders/water.gdshader" id="4_pm3ni"]
 [ext_resource type="Texture2D" uid="uid://3dfsldwpp57x" path="res://maps/map_01_provinces.png" id="5_a8y0u"]
-[ext_resource type="Shader" uid="uid://bxskpn667ysxq" path="res://scenes/FactionsMap.gdshader" id="6_jkv2x"]
+[ext_resource type="Shader" uid="uid://qyqo0nmj387i" path="res://shaders/faction_map.gdshader" id="6_a8y0u"]
 [ext_resource type="Texture2D" uid="uid://bcbrnvxs7yp36" path="res://assets/tilesets/sat_tileset.png" id="6_og1vs"]
 [ext_resource type="Texture2D" uid="uid://cixu2iuc1s4x4" path="res://maps/political_map.png" id="10_yq6so"]
 [ext_resource type="Texture2D" uid="uid://dfe6y3p1a6j2q" path="res://maps/border_map_4096.png" id="12_dp3eg"]
 [ext_resource type="Shader" uid="uid://bqwvmr70gnsi2" path="res://shaders/border.gdshader" id="12_tel4y"]
-[ext_resource type="Texture2D" uid="uid://qb28uwu154x7" path="res://scripts/autoloads/map_01_provinces_4096.png" id="13_gqmmt"]
+[ext_resource type="Texture2D" uid="uid://qb28uwu154x7" path="res://maps/map_01_provinces_4096.png" id="13_gqmmt"]
 [ext_resource type="Script" uid="uid://dj6gjhuc1ci5g" path="res://scripts/camera_2d.gd" id="16_j8jky"]
 [ext_resource type="Shader" uid="uid://ddmjbifcoltas" path="res://shaders/crt.gdshader" id="18_fuf3a"]
-[ext_resource type="Script" uid="uid://dm37rijg66dst" path="res://scripts/crt.gd" id="19_pibwh"]
 [ext_resource type="Script" uid="uid://sytpndouud54" path="res://scripts/selection_panel.gd" id="20_c6pm6"]
 [ext_resource type="Script" uid="uid://tglgwhkkc5lv" path="res://scenes/DebugPanel.gd" id="20_gqmmt"]
 
@@ -982,7 +981,7 @@ sources/76 = SubResource("TileSetAtlasSource_yc10j")
 tile_proxies/coords_level = [[0, Vector2i(0, 0)], [76, Vector2i(0, 0)], [1, Vector2i(0, 0)], [76, Vector2i(1, 0)], [2, Vector2i(0, 0)], [76, Vector2i(2, 0)], [3, Vector2i(0, 0)], [76, Vector2i(3, 0)], [4, Vector2i(0, 0)], [76, Vector2i(4, 0)], [5, Vector2i(0, 0)], [76, Vector2i(5, 0)], [6, Vector2i(0, 0)], [76, Vector2i(6, 0)], [7, Vector2i(0, 0)], [76, Vector2i(7, 0)], [8, Vector2i(0, 0)], [76, Vector2i(0, 1)], [9, Vector2i(0, 0)], [76, Vector2i(1, 1)], [10, Vector2i(0, 0)], [76, Vector2i(2, 1)], [11, Vector2i(0, 0)], [76, Vector2i(3, 1)], [12, Vector2i(0, 0)], [76, Vector2i(4, 1)], [13, Vector2i(0, 0)], [76, Vector2i(5, 1)], [14, Vector2i(0, 0)], [76, Vector2i(6, 1)], [15, Vector2i(0, 0)], [76, Vector2i(7, 1)], [16, Vector2i(0, 0)], [76, Vector2i(0, 2)], [17, Vector2i(0, 0)], [76, Vector2i(1, 2)], [18, Vector2i(0, 0)], [76, Vector2i(2, 2)], [19, Vector2i(0, 0)], [76, Vector2i(3, 2)], [20, Vector2i(0, 0)], [76, Vector2i(4, 2)], [21, Vector2i(0, 0)], [76, Vector2i(5, 2)], [22, Vector2i(0, 0)], [76, Vector2i(6, 2)], [23, Vector2i(0, 0)], [76, Vector2i(7, 2)], [24, Vector2i(0, 0)], [76, Vector2i(0, 3)], [25, Vector2i(0, 0)], [76, Vector2i(1, 3)], [26, Vector2i(0, 0)], [76, Vector2i(2, 3)], [27, Vector2i(0, 0)], [76, Vector2i(3, 3)], [28, Vector2i(0, 0)], [76, Vector2i(4, 3)], [29, Vector2i(0, 0)], [76, Vector2i(5, 3)], [30, Vector2i(0, 0)], [76, Vector2i(6, 3)], [31, Vector2i(0, 0)], [76, Vector2i(7, 3)], [32, Vector2i(0, 0)], [76, Vector2i(0, 4)], [33, Vector2i(0, 0)], [76, Vector2i(1, 4)], [34, Vector2i(0, 0)], [76, Vector2i(2, 4)], [35, Vector2i(0, 0)], [76, Vector2i(3, 4)], [36, Vector2i(0, 0)], [76, Vector2i(4, 4)], [37, Vector2i(0, 0)], [76, Vector2i(5, 4)], [38, Vector2i(0, 0)], [76, Vector2i(6, 4)], [39, Vector2i(0, 0)], [76, Vector2i(7, 4)], [40, Vector2i(0, 0)], [76, Vector2i(0, 5)], [41, Vector2i(0, 0)], [76, Vector2i(1, 5)], [42, Vector2i(0, 0)], [76, Vector2i(2, 5)], [43, Vector2i(0, 0)], [76, Vector2i(3, 5)], [44, Vector2i(0, 0)], [76, Vector2i(4, 5)], [45, Vector2i(0, 0)], [76, Vector2i(5, 5)], [46, Vector2i(0, 0)], [76, Vector2i(6, 5)], [47, Vector2i(0, 0)], [76, Vector2i(7, 5)], [48, Vector2i(0, 0)], [76, Vector2i(0, 6)], [49, Vector2i(0, 0)], [76, Vector2i(1, 6)], [50, Vector2i(0, 0)], [76, Vector2i(2, 6)], [51, Vector2i(0, 0)], [76, Vector2i(3, 6)], [52, Vector2i(0, 0)], [76, Vector2i(4, 6)], [53, Vector2i(0, 0)], [76, Vector2i(5, 6)], [54, Vector2i(0, 0)], [76, Vector2i(6, 6)], [55, Vector2i(0, 0)], [76, Vector2i(7, 6)], [56, Vector2i(0, 0)], [76, Vector2i(0, 7)], [57, Vector2i(0, 0)], [76, Vector2i(1, 7)], [58, Vector2i(0, 0)], [76, Vector2i(2, 7)], [59, Vector2i(0, 0)], [76, Vector2i(3, 7)], [60, Vector2i(0, 0)], [76, Vector2i(4, 7)], [61, Vector2i(0, 0)], [76, Vector2i(5, 7)], [62, Vector2i(0, 0)], [76, Vector2i(6, 7)], [63, Vector2i(0, 0)], [76, Vector2i(7, 7)], [64, Vector2i(0, 0)], [76, Vector2i(0, 8)], [65, Vector2i(0, 0)], [76, Vector2i(1, 8)], [66, Vector2i(0, 0)], [76, Vector2i(2, 8)], [67, Vector2i(0, 0)], [76, Vector2i(3, 8)], [68, Vector2i(0, 0)], [76, Vector2i(4, 8)], [69, Vector2i(0, 0)], [76, Vector2i(5, 8)], [70, Vector2i(0, 0)], [76, Vector2i(6, 8)], [71, Vector2i(0, 0)], [76, Vector2i(7, 8)], [72, Vector2i(0, 0)], [76, Vector2i(0, 9)], [73, Vector2i(0, 0)], [76, Vector2i(1, 9)], [74, Vector2i(0, 0)], [76, Vector2i(2, 9)], [75, Vector2i(0, 0)], [76, Vector2i(3, 9)]]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jbj1t"]
-shader = ExtResource("6_jkv2x")
+shader = ExtResource("6_a8y0u")
 shader_parameter/border_strength = 0.8770000416575
 shader_parameter/inner_strength = 0.2000000095
 shader_parameter/water_border_strength = 0.774000036765
@@ -1073,7 +1072,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("19_pibwh")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1412339274]
 
