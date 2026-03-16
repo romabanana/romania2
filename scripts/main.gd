@@ -18,13 +18,16 @@ const TOP_ATLAS_ID := 76
 func _ready() -> void:
 	_load()
 	ProvinceManager.load_provinces()
+	FactionManager.load_factions()       
 	TerrainManager.build(terrain_map)
 	Pathfinder.build()
 	PoliticalMap.setup($PoliticalMap)
 	_setup_overlays()
 	_setup_water()
 	_register_visuals()
-
+	
+	FactionManager.capture_province(26, 8)  # province 1 → faction 1
+	
 
 func _load() -> void:
 	if not FileAccess.file_exists(map_path):
@@ -91,3 +94,6 @@ func _register_visuals() -> void:
 	VisualManager.register("border",   $BorderMap)
 	VisualManager.register_shader("aberration",  $Camera2D/crtCanvas/CRT, "aberration",       0.005)
 	VisualManager.register_shader("scanlines",   $Camera2D/crtCanvas/CRT, "scanline_strength", 0.2)
+	VisualManager.register_shader("faction_border",   $PoliticalMap, "border_strength", 0.9)
+	VisualManager.register_shader("faction_color",   $PoliticalMap, "inner_strength", 0.2)
+	VisualManager.register_shader("water_border",   $PoliticalMap, "water_border_strength", 0.5)

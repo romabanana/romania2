@@ -6,49 +6,32 @@ extends Node
 #  "how do I get from A to B?"
 # ─────────────────────────────────────────
 
-var astar : AStar2D = AStar2D.new()
+var astar : AStarGrid2D = AStarGrid2D.new()
 
-
-# ─────────────────────────────────────────
-#  Build from TerrainManager
-#  Call after TerrainManager.build()
-# ─────────────────────────────────────────
 func build() -> void:
-	astar.clear()
+	var used_rect := TerrainManager.terrain_map.get_used_rect()
+	astar.region     = used_rect
+	astar.cell_shape = AStarGrid2D.CELL_SHAPE_ISOMETRIC_RIGHT
+	astar.cell_size  = Vector2(256.0, 128.0)
+	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ALWAYS
+	astar.default_compute_heuristic  = AStarGrid2D.HEURISTIC_MANHATTAN
+	astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
+	astar.update()
 
-	# add all passable points
-	for cell in TerrainManager.grid:
-		if TerrainManager.is_passable(cell):
-			astar.add_point(_id(cell), Vector2(cell))
-
-	# connect 8 isometric neighbors
 	for cell in TerrainManager.grid:
 		if not TerrainManager.is_passable(cell):
-			continue
-		for neighbor in _neighbors(cell):
-			if TerrainManager.grid.has(neighbor) and TerrainManager.is_passable(neighbor):
-				astar.connect_points(_id(cell), _id(neighbor), true)
+			astar.set_point_solid(cell, true)
 
-	print("Pathfinder: built with %d points" % astar.get_point_count())
-
-
-# ─────────────────────────────────────────
-#  Pathfinding
-# ─────────────────────────────────────────
+	
 func get_tile_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
-	if not TerrainManager.is_passable(to) or not TerrainManager.grid.has(to):
+	if not TerrainManager.is_passable(to):
 		return []
-
-	var id_path := astar.get_id_path(_id(from), _id(to))
-	var result  : Array[Vector2i] = []
-
-	for id in id_path:
-		result.append(_cell(id))
-
-	if not result.is_empty():
-		result.remove_at(0)
-
-	return result
+	if not astar.is_in_boundsv(from) or not astar.is_in_boundsv(to):
+		return []
+	var raw : Array[Vector2i] = astar.get_id_path(from, to)
+	if not raw.is_empty():
+		raw.remove_at(0)
+	return raw
 
 
 # ─────────────────────────────────────────

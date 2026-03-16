@@ -78,7 +78,8 @@ func _spawn_test_unit(tile: Vector2i) -> void:
 	var division_scene := Node2D.new()
 
 	var sprite := Sprite2D.new()
-	sprite.texture = load("res://assets/textures/icon.svg")
+	sprite.texture = load("res://assets/images/gorillas/Gorilla.jpg")
+	sprite.global_scale = Vector2(0.25, 0.25)
 	sprite.name = "Sprite2D"
 	division_scene.add_child(sprite)
 

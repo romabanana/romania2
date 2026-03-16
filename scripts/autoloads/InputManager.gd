@@ -14,14 +14,14 @@ func _input(event: InputEvent) -> void:
 		# ── Gameplay ──────────────────────
 		KEY_ESCAPE:
 			SelectionManager.deselect_all()
+		KEY_SPACE: GameClock.toggle_pause()
+		
+		KEY_ALT:
+			if SelectionManager.selected_unit:
+				SelectionManager.selected_unit.cancel_movement()
 
 		# ── Debug ─────────────────────────
 		KEY_F1:
 			var panel := get_tree().get_first_node_in_group("debug_panel")
 			if panel:
 				panel.toggle_visibility()
-
-		# ── Future gameplay keys here ──────
-		# KEY_SPACE: GameClock.toggle_pause()
-		# KEY_1:     GameClock.set_speed(1.0)
-		# KEY_2:     GameClock.set_speed(2.0)

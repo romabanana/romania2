@@ -12,7 +12,6 @@ extends Camera2D
 
 #	Thanks Claude :)
 # ─────────────────────────────────────────
-
 # --- Pan settings ---
 @export var pan_speed: float = 600.0          # pixels/sec for keyboard & edge scroll
 @export var edge_scroll_margin: int = 20      # px from screen edge that triggers scroll
@@ -40,7 +39,7 @@ var _target_zoom: Vector2 = Vector2.ONE
 
 func _ready() -> void:
 	_target_zoom = zoom
-
+	
 
 func _process(delta: float) -> void:
 	_handle_keyboard_pan(delta)

@@ -2,23 +2,16 @@ extends Node
 
 # ─────────────────────────────────────────
 #  PoliticalMap — Autoload
-#  A different map size can be set on setup.
-#  
+#  Purely visual — paints province ownership
+#  onto a texture. Reacts to FactionManager.
 # ─────────────────────────────────────────
 
-const FACTIONS_PATH : String = "res://data/factions.json"
 var map_size : int = 256
 
-# ── Faction data ─────────────────────────
-# faction_id (int) → { "name", "color" }
-var factions : Dictionary = {}
-
-# ── Political map texture ─────────────────
+# ── Texture ───────────────────────────────
 var political_image   : Image        = null
 var political_texture : ImageTexture = null
-
-# ── Reference to the sprite ──────────────
-var political_sprite : Sprite2D = null
+var political_sprite  : Sprite2D     = null
 
 
 # ─────────────────────────────────────────
@@ -26,86 +19,51 @@ var political_sprite : Sprite2D = null
 # ─────────────────────────────────────────
 func setup(sprite: Sprite2D, map_size_input: int = 256) -> void:
 	political_sprite = sprite
-	map_size = map_size_input
-	
-	_load_factions()
+	map_size         = map_size_input
+
 	_build_texture()
 
-# Load the factions from json. Each has a unique id, a name and a color.
-func _load_factions() -> void:
-	if not FileAccess.file_exists(FACTIONS_PATH):
-		push_error("PoliticalMap: no factions.json at " + FACTIONS_PATH)
-		return
+	# listen to ownership changes
+	FactionManager.province_owner_changed.connect(_on_ownership_changed)
 
-	var file := FileAccess.open(FACTIONS_PATH, FileAccess.READ)
-	var json := JSON.new()
-	var err  := json.parse(file.get_as_text())
-	file.close()
+	print("PoliticalMap: ready")
 
-	if err != OK:
-		push_error("PoliticalMap: failed to parse factions.json")
-		return
 
-	var data : Dictionary = json.get_data()
-	for key in data:
-		var id    : int  = int(key)
-		var entry        = data[key]
-		factions[id] = {
-			"name":  entry["name"],
-			"color": Color(entry["color"]) # "Color"
-		}
-
-	print("PoliticalMap: loaded %d factions" % factions.size())
-
-# Creates the image every time. It should save it once and just load it from there.
-# ... what am i seeing
- 
 func _build_texture() -> void:
-	# create blank transparent 256x256 image
 	political_image = Image.create(map_size, map_size, false, Image.FORMAT_RGBA8)
 	political_image.fill(Color(0, 0, 0, 0))
-
-	# create texture
+	
 	political_texture = ImageTexture.create_from_image(political_image)
 	
-	# paint initial ownership
+	# paint initial ownership from current province data
 	for province_id in ProvinceManager.provinces:
-		var province_owner = ProvinceManager.provinces[province_id]["owner"]
-		if province_owner != null and factions.has(province_owner):
-			_paint_province_pixels(province_id, factions[province_owner]["color"])
+		var province_owner = ProvinceManager.get_province_owner(province_id)
+		if province_owner != null and province_owner >= 0:
+			var color := FactionManager.get_faction_color(province_owner)
+			color.a   = 1.0
+			_paint_province_pixels(province_id, color)
 
-	# assign to sprite
-	political_sprite.texture = political_texture
+	political_sprite.texture        = political_texture
 	political_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 
 	print("PoliticalMap: texture built")
 
 
 # ─────────────────────────────────────────
-#  Ownership
+#  React to ownership changes
 # ─────────────────────────────────────────
-func set_province_owner(province_id: int, faction_id: int) -> void:
-	if not ProvinceManager.provinces.has(province_id):
-		push_error("PoliticalMap: province %d not found" % province_id)
-		return
-
-	ProvinceManager.set_province_owner(province_id, faction_id)
-
+func _on_ownership_changed(province_id: int, faction_id: int) -> void:
 	var color : Color
-	if faction_id >= 0 and factions.has(faction_id):
-		color = factions[faction_id]["color"]
-		color.a = 1
+	if faction_id >= 0:
+		color   = FactionManager.get_faction_color(faction_id)
+		color.a = 1.0
 	else:
-		color = Color(0, 0, 0, 0)   # unowned = transparent
+		color = Color(0, 0, 0, 0)
 
 	_paint_province_pixels(province_id, color)
 
-func clear_province_owner(province_id: int) -> void:
-	set_province_owner(province_id, -1)
-
 
 func _paint_province_pixels(province_id: int, color: Color) -> void:
-	
 	var tiles := ProvinceManager.get_province_tiles(province_id)
 	for tile in tiles:
 		political_image.set_pixel(tile.x, tile.y, color)
@@ -113,20 +71,11 @@ func _paint_province_pixels(province_id: int, color: Color) -> void:
 
 
 # ─────────────────────────────────────────
-#  Accessors
+#  Visibility
 # ─────────────────────────────────────────
-func get_faction(id: int) -> Dictionary:
-	return factions.get(id, {})
-
-func get_faction_color(id: int) -> Color:
-	return factions.get(id, {}).get("color", Color(0, 0, 0, 0))
-
-func get_faction_name(id: int) -> String:
-	return factions.get(id, {}).get("name", "Unknown")
-
-func show_overlay(visible: bool) -> void:
+func show_overlay(value: bool) -> void:
 	if political_sprite:
-		political_sprite.visible = visible
+		political_sprite.visible = value
 
 func toggle_overlay() -> void:
 	if political_sprite:

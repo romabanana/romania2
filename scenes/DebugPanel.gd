@@ -67,6 +67,9 @@ func _register_watches() -> void:
 		var cell := tm.local_to_map(tm.get_local_mouse_position())
 		var id   := ProvinceManager.get_province_id(cell)
 		return ProvinceManager.get_province_name(id))
+		
+	_watch("Time", func(): return GameClock.get_time_string())
+	_watch("Paused", func(): return str(GameClock.is_paused))
 
 	_watch("Selected unit", func():
 		var d : Node2D = SelectionManager.selected_unit
@@ -103,7 +106,12 @@ func _register_tweaks() -> void:
 			func(): return VisualManager.is_visible("border"),
 			func(v): VisualManager.set_visible("border", v))
 
+	# ── Time tweaks ────────────────────────
+	_tweak("Hours per second", 0.5, 10.0,
+	func(): return GameClock.hours_per_second,
+	func(v): GameClock.hours_per_second = v)
 	# ── Unit tweaks ────────────────────────
+	
 
 	_tweak("Unit move speed", 0.05, 2.0,
 		func():
@@ -124,6 +132,19 @@ func _register_tweaks() -> void:
 		func(): return VisualManager.get_shader_param("scanlines"),
 		func(v): VisualManager.set_shader_param("scanlines", v),
 		0.01)
+
+	_tweak("MAP border tint", 0.0, 1.0,
+		func(): return VisualManager.get_shader_param("faction_border"),
+		func(v): VisualManager.set_shader_param("faction_border", v),
+		0.1)
+	_tweak("MAP inner tint", 0.0, 1.0,
+		func(): return VisualManager.get_shader_param("faction_color"),
+		func(v): VisualManager.set_shader_param("faction_color", v),
+		0.1)
+	_tweak("MAP water border tint", 0.0, 1.0,
+		func(): return VisualManager.get_shader_param("water_border"),
+		func(v): VisualManager.set_shader_param("water_border", v),
+		0.1)
 
 # ─────────────────────────────────────────
 #  Toggle visibility

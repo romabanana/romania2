@@ -25,6 +25,8 @@ UnitManager="*uid://b50vvcf7t4hmk"
 TerrainManager="*uid://c7ii2d14tmyia"
 InputManager="*uid://b3g3h0q64x6bl"
 VisualManager="*uid://03yw3f66t10h"
+GameClock="*uid://c6l1i00ho43sn"
+FactionManager="*uid://bc3r5x4oh3ri3"
 
 [physics]
 
