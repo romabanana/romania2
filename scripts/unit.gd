@@ -22,6 +22,8 @@ var hours_accumulated : float           = 0.0
 var tilemap   : TileMapLayer = null
 var path_line : Line2D       = null
 
+var faction_id : int = -1
+
 
 func _ready() -> void:
 	z_index = 10

@@ -2,92 +2,74 @@ extends Node
 
 # ─────────────────────────────────────────
 #  SelectionManager — Autoload
-#  This scripts will handle "selection". Right now has many trash of testing.
-#  Too much to think.
+#  Tracks what is currently selected.
+#  Only player faction units can be selected.
 # ─────────────────────────────────────────
 
-var selected_unit = null   # current selected Division node
+# ── Signals ──────────────────────────────
+signal unit_selected(unit)
+signal province_selected(province_id: int)
+signal deselected()
 
-# read from groups
-@onready var tilemap : TileMapLayer = get_tree().get_first_node_in_group("terrain_map")
-@onready var selection_panel = get_tree().get_first_node_in_group("selection_panel")
+# ── State ─────────────────────────────────
+var selected_unit = null
 
-func _ready() -> void:
-	await get_tree().process_frame
-	_spawn_test_unit(Vector2i(20,22))
 
+# ─────────────────────────────────────────
+#  Input
+# ─────────────────────────────────────────
 func _unhandled_input(event: InputEvent) -> void:
-	
-	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_ESCAPE:
-			deselect_all()
-			return
-	
-	if not event is InputEventMouseButton:
-		return
-	if not event.pressed:
+	if not event is InputEventMouseButton or not event.pressed:
 		return
 
 	var clicked_tile := _get_clicked_tile()
 	if clicked_tile == Vector2i(-1, -1):
-			return
+		return
 
-	# left click — select
 	if event.button_index == MOUSE_BUTTON_LEFT:
-		var unit_on_tile = UnitManager.get_unit_at(clicked_tile)
-		if unit_on_tile != null:
-			_select(unit_on_tile)
+		var unit := UnitManager.get_unit_at(clicked_tile)
+		if unit != null:
+			# only select units belonging to player faction
+			if unit.faction_id == PlayerController.faction_id:
+				_select_unit(unit)
+			else:
+				deselect_all()
 		else:
+			# clicked empty tile — select province
+			var province_id := ProvinceManager.get_province_id(clicked_tile)
+			if province_id != -1:
+				province_selected.emit(province_id)
 			deselect_all()
 
-	# right click — move selected unit
 	elif event.button_index == MOUSE_BUTTON_RIGHT:
 		if selected_unit != null:
 			selected_unit.move_to(clicked_tile)
 
-func _select(division) -> void:
+
+# ─────────────────────────────────────────
+#  Selection
+# ─────────────────────────────────────────
+func _select_unit(unit) -> void:
 	if selected_unit != null:
 		selected_unit.deselect()
-	selected_unit = division
+	selected_unit = unit
 	selected_unit.select()
-	selection_panel.show_division(division)
+	unit_selected.emit(unit)
 
 
 func deselect_all() -> void:
 	if selected_unit != null:
 		selected_unit.deselect()
-	selected_unit = null
-	selection_panel.hide_panel()
+		selected_unit = null
+		deselected.emit()
 
 
-
+# ─────────────────────────────────────────
+#  Helpers
+# ─────────────────────────────────────────
 func _get_clicked_tile() -> Vector2i:
-	if not tilemap:
-		tilemap = get_tree().get_first_node_in_group("terrain_map")
-	if not tilemap:
+	var tm := get_tree().get_first_node_in_group("terrain_map") as TileMapLayer
+	if not tm:
 		push_error("SelectionManager: no node in group 'terrain_map'")
 		return Vector2i(-1, -1)
-	var local_pos := tilemap.get_local_mouse_position()
-	return tilemap.local_to_map(local_pos)
-
-# Just for testing
-func _spawn_test_unit(tile: Vector2i) -> void:
-	if not tilemap:
-		tilemap = get_tree().get_first_node_in_group("terrain_map")
-
-	var division_scene := Node2D.new()
-
-	var sprite := Sprite2D.new()
-	sprite.texture = load("res://assets/images/gorillas/Gorilla.jpg")
-	sprite.global_scale = Vector2(0.25, 0.25)
-	sprite.name = "Sprite2D"
-	division_scene.add_child(sprite)
-
-	var circle := Node2D.new()
-	circle.name = "SelectionCircle"
-	division_scene.add_child(circle)
-
-	division_scene.set_script(load("res://scripts/unit.gd"))
-	get_tree().current_scene.add_child(division_scene)
-	division_scene.init(tile, tilemap)
-	print("Test division spawned at tile: ", tile)
+	return tm.local_to_map(tm.get_local_mouse_position())

@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://ciptcdouru7qa"]
+
+[ext_resource type="Script" uid="uid://d0mny78xreioq" path="res://scripts/ui/UnitPanel.gd" id="1_w8bte"]
+
+[node name="Control" type="Control" unique_id=1977983173]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_w8bte")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1966078751]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LabelName" type="Label" parent="VBoxContainer" unique_id=1981031780]
+layout_mode = 2
+
+[node name="LabelFaction" type="Label" parent="VBoxContainer" unique_id=1048606345]
+layout_mode = 2
+
+[node name="LabelType" type="Label" parent="VBoxContainer" unique_id=1793719022]
+layout_mode = 2
+
+[node name="LabelManpower" type="Label" parent="VBoxContainer" unique_id=409064400]
+layout_mode = 2
+
+[node name="LabelStatus" type="Label" parent="VBoxContainer" unique_id=1367469652]
+layout_mode = 2
+
+[node name="LabelTile" type="Label" parent="VBoxContainer" unique_id=1704244080]
+layout_mode = 2
+
+[node name="LabelProvince" type="Label" parent="VBoxContainer" unique_id=1310284696]
+layout_mode = 2

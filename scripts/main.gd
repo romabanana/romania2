@@ -18,7 +18,7 @@ const TOP_ATLAS_ID := 76
 func _ready() -> void:
 	_load()
 	ProvinceManager.load_provinces()
-	FactionManager.load_factions()       
+	FactionManager.load_factions()
 	TerrainManager.build(terrain_map)
 	Pathfinder.build()
 	PoliticalMap.setup($PoliticalMap)
@@ -26,7 +26,14 @@ func _ready() -> void:
 	_setup_water()
 	_register_visuals()
 	
-	FactionManager.capture_province(26, 8)  # province 1 → faction 1
+	# setup unit spawning
+	UnitManager.unit_parent = $Units
+	UnitManager.tilemap     = $TerrainMap
+	
+	# spawn test units
+	UnitManager.spawn(Vector2i(25, 84), 1)   # player unit
+	UnitManager.spawn(Vector2i(25, 85), 2) # enemy unit
+	
 	
 
 func _load() -> void:

@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dfe6y3p1a6j2q" path="res://maps/border_map_4096.png" id="12_dp3eg"]
 [ext_resource type="Shader" uid="uid://bqwvmr70gnsi2" path="res://shaders/border.gdshader" id="12_tel4y"]
 [ext_resource type="Texture2D" uid="uid://qb28uwu154x7" path="res://maps/map_01_provinces_4096.png" id="13_gqmmt"]
+[ext_resource type="Script" uid="uid://dyjk8nlrvi6mo" path="res://scripts/ui/GameUI.gd" id="14_jkv2x"]
 [ext_resource type="Script" uid="uid://dj6gjhuc1ci5g" path="res://scripts/camera_2d.gd" id="16_j8jky"]
 [ext_resource type="Shader" uid="uid://ddmjbifcoltas" path="res://shaders/crt.gdshader" id="18_fuf3a"]
 [ext_resource type="Script" uid="uid://sytpndouud54" path="res://scripts/selection_panel.gd" id="20_c6pm6"]
@@ -996,8 +997,8 @@ shader_parameter/border_color = Color(1, 1, 1, 0.8)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_65sq8"]
 shader = ExtResource("18_fuf3a")
 shader_parameter/curvature = 7.34800020653
-shader_parameter/scanline_strength = 0.17200000817
-shader_parameter/aberration = 0.0050000002375
+shader_parameter/scanline_strength = 0.1390000066025
+shader_parameter/aberration = 0.0010000000475
 shader_parameter/vignette_strength = 1.0690000507775
 shader_parameter/brightness = 0.678000008455
 
@@ -1073,9 +1074,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1412339274]
+[node name="oldUI" type="CanvasLayer" parent="." unique_id=1412339274]
+visible = false
 
-[node name="SelectionPanel" type="PanelContainer" parent="UI" unique_id=79097783 groups=["selection_panel"]]
+[node name="SelectionPanel" type="PanelContainer" parent="oldUI" unique_id=79097783 groups=["selection_panel"]]
 custom_minimum_size = Vector2(280, 0)
 anchors_preset = 11
 anchor_left = 1.0
@@ -1087,7 +1089,7 @@ grow_vertical = 2
 script = ExtResource("20_c6pm6")
 metadata/_edit_use_anchors_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/SelectionPanel" unique_id=1546788028]
+[node name="MarginContainer" type="MarginContainer" parent="oldUI/SelectionPanel" unique_id=1546788028]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/margin_left = 10
@@ -1095,31 +1097,36 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/SelectionPanel/MarginContainer" unique_id=395091215]
+[node name="VBoxContainer" type="VBoxContainer" parent="oldUI/SelectionPanel/MarginContainer" unique_id=395091215]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="UI/SelectionPanel/MarginContainer/VBoxContainer" unique_id=2101980620]
+[node name="Title" type="Label" parent="oldUI/SelectionPanel/MarginContainer/VBoxContainer" unique_id=2101980620]
 layout_mode = 2
 text = "\"Name: —\""
 
-[node name="HSeparator" type="HSeparator" parent="UI/SelectionPanel/MarginContainer/VBoxContainer" unique_id=957019854]
+[node name="HSeparator" type="HSeparator" parent="oldUI/SelectionPanel/MarginContainer/VBoxContainer" unique_id=957019854]
 layout_mode = 2
 
-[node name="LabelName" type="Label" parent="UI/SelectionPanel/MarginContainer/VBoxContainer" unique_id=463455429]
+[node name="LabelName" type="Label" parent="oldUI/SelectionPanel/MarginContainer/VBoxContainer" unique_id=463455429]
 layout_mode = 2
 text = "\"Name: —\""
 
-[node name="LabelProvince" type="Label" parent="UI/SelectionPanel/MarginContainer/VBoxContainer" unique_id=462942178]
+[node name="LabelProvince" type="Label" parent="oldUI/SelectionPanel/MarginContainer/VBoxContainer" unique_id=462942178]
 layout_mode = 2
 text = "\"Name: —\""
 
-[node name="LabelTerrain" type="Label" parent="UI/SelectionPanel/MarginContainer/VBoxContainer" unique_id=1718794356]
+[node name="LabelTerrain" type="Label" parent="oldUI/SelectionPanel/MarginContainer/VBoxContainer" unique_id=1718794356]
 layout_mode = 2
 text = "\"Name: —\""
 
-[node name="LabelStatus" type="Label" parent="UI/SelectionPanel/MarginContainer/VBoxContainer" unique_id=859303120]
+[node name="LabelStatus" type="Label" parent="oldUI/SelectionPanel/MarginContainer/VBoxContainer" unique_id=859303120]
 layout_mode = 2
 text = "\"Name: —\""
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1903985794]
+script = ExtResource("14_jkv2x")
 
 [node name="Debug" type="CanvasLayer" parent="." unique_id=1594789849 groups=["debug_panel"]]
 script = ExtResource("20_gqmmt")
+
+[node name="Units" type="Node2D" parent="." unique_id=1923634687]

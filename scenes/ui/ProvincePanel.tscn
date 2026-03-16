@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://m6q5xhb62no1"]
+
+[ext_resource type="Script" uid="uid://bnrngtbyomx65" path="res://scripts/ui/ProvincePanel.gd" id="1_0eeg8"]
+
+[node name="Control" type="Control" unique_id=285378647]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_0eeg8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=413768414]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LabelName" type="Label" parent="VBoxContainer" unique_id=1832431392]
+layout_mode = 2
+
+[node name="LabelOwner" type="Label" parent="VBoxContainer" unique_id=1015205036]
+layout_mode = 2
+
+[node name="LabelTiles" type="Label" parent="VBoxContainer" unique_id=305306015]
+layout_mode = 2
+
+[node name="LabelUnits" type="Label" parent="VBoxContainer" unique_id=373650904]
+layout_mode = 2

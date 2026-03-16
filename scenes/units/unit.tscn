@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cum0s7wah8f3s"]
+
+[ext_resource type="Script" uid="uid://dq7rknxtbboj3" path="res://scripts/unit.gd" id="1_qgilm"]
+[ext_resource type="Texture2D" uid="uid://d3yl03ababqk2" path="res://assets/images/gorillas/Gorilla.jpg" id="2_6e3tn"]
+
+[node name="Unit" type="Node2D" unique_id=843503975]
+script = ExtResource("1_qgilm")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=670624040]
+texture = ExtResource("2_6e3tn")
+
+[node name="SelectionCircle" type="Node2D" parent="." unique_id=1870206773]
