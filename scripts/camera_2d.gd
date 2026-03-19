@@ -186,10 +186,10 @@ func _apply_zoom(mouse_pos: Vector2, old_zoom: Vector2) -> void:
 	var vp_size      := get_viewport().get_visible_rect().size
 	var world_before := global_position + (mouse_pos - vp_size * 0.5) / old_zoom
 	var world_after  := global_position + (mouse_pos - vp_size * 0.5) / new_zoom
-	var offset       := world_before - world_after
+	var cursor_offset       := world_before - world_after
 
 	var tween := create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(self, "zoom", new_zoom, 0.2)
-	tween.parallel().tween_property(self, "global_position", global_position + offset, 0.2)
+	tween.parallel().tween_property(self, "global_position", global_position + cursor_offset, 0.2)

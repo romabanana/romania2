@@ -7,8 +7,8 @@ extends CanvasLayer
 # ─────────────────────────────────────────
 
 const TOP_BAR_HEIGHT    : int = 40
-const BOTTOM_BAR_HEIGHT : int = 200
-const MINIMAP_SIZE      : int = 200
+const BOTTOM_BAR_HEIGHT : int = 256
+const MINIMAP_SIZE      : int = 256
 
 var top_bar      : PanelContainer = null
 var bottom_bar   : PanelContainer = null

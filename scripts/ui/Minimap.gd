@@ -1,112 +1,136 @@
 extends Control
 
-# ─────────────────────────────────────────
-#  Minimap
-#  Shows terrain, units and camera viewport.
-#  Click to move camera.
-# ─────────────────────────────────────────
-
 const MAP_SIZE     : int   = 256
-const MINIMAP_SIZE : float = 200.0
-
+const MINIMAP_SIZE : float = 256.0
 const TERRAIN_PNG  : String = "res://maps/map_01.png"
 
-# ── References ────────────────────────────
-var camera     : Camera2D  = null
-var terrain_tex: Texture2D = null
-
-# ── Colors ────────────────────────────────
 const VIEWPORT_COLOR : Color = Color(1.0, 1.0, 0.0, 0.8)
 const VIEWPORT_WIDTH : float = 1.5
 
+var camera         : Camera2D   = null
+var terrain_poly   : Polygon2D  = null
+var _last_cam_pos  : Vector2    = Vector2.ZERO
+var _last_cam_zoom : Vector2    = Vector2.ONE
 
-func _ready() -> void: 
+
+func _ready() -> void:
 	custom_minimum_size = Vector2(MINIMAP_SIZE, MINIMAP_SIZE)
-
-	# load terrain texture
-	terrain_tex = load(TERRAIN_PNG) as Texture2D
-
-	# find camera
 	camera = get_tree().get_first_node_in_group("camera")
+	_build_terrain_poly()
+	queue_redraw()
 
-	# redraw every frame for unit dots and viewport rect
-	set_process(true)
+func _build_terrain_poly() -> void:
+	var tex := load(TERRAIN_PNG) as Texture2D
+	if not tex:
+		return
+
+	terrain_poly = Polygon2D.new()
+	terrain_poly.texture = tex
+	terrain_poly.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+
+	# fit diamond into MINIMAP_SIZE
+	# diamond is wider than tall (2:1 ratio) so fit to width
+	var half := MINIMAP_SIZE / 2.0
+
+	terrain_poly.polygon = PackedVector2Array([
+		Vector2(half,         0.0),         # top
+		Vector2(MINIMAP_SIZE, half),         # right
+		Vector2(half,         MINIMAP_SIZE), # bottom
+		Vector2(0.0,          half)          # left
+	])
+
+	terrain_poly.uv = PackedVector2Array([
+		Vector2(0,   0),
+		Vector2(256, 0),
+		Vector2(256, 256),
+		Vector2(0,   256)
+	])
+	terrain_poly.z_index = -1  # render below everything
+	add_child(terrain_poly)
 
 
 func _process(_delta: float) -> void:
-	queue_redraw()
+	if not camera:
+		return
+	if camera.global_position != _last_cam_pos or camera.zoom != _last_cam_zoom:
+		_last_cam_pos  = camera.global_position
+		_last_cam_zoom = camera.zoom
+		queue_redraw()
 
 
 func _draw() -> void:
-	# ── terrain background ─────────────────
-	if terrain_tex:
-		draw_texture_rect(terrain_tex, Rect2(Vector2.ZERO, Vector2(MINIMAP_SIZE, MINIMAP_SIZE)), false)
-
-	# ── unit dots ──────────────────────────
 	for unit in UnitManager.get_all_units():
-		var pos    := _grid_to_minimap(unit.current_tile)
-		var color  := FactionManager.get_faction_color(unit.faction_id)
-		draw_circle(pos, 2.5, color)
+		var pos   := _grid_to_minimap(unit.current_tile)
+		var color := FactionManager.get_faction_color(unit.faction_id)
+		draw_circle(pos, 3.0, color)
 
-	# ── camera viewport rectangle ──────────
 	if camera:
 		_draw_viewport_rect()
 
 
 func _draw_viewport_rect() -> void:
-	var vp_size    := get_viewport().get_visible_rect().size
-	var zoom       := camera.zoom
-	var cam_pos    := camera.global_position
+	var vp_size  := get_viewport().get_visible_rect().size
+	var half_vp  := vp_size / camera.zoom / 2.0
+	var world_tl := camera.global_position - half_vp
+	var world_br := camera.global_position + half_vp
 
-	# world bounds of what camera sees
-	var half_vp    := vp_size / zoom / 2.0
-	var world_tl   := cam_pos - half_vp
-	var world_br   := cam_pos + half_vp
+	var tm := get_tree().get_first_node_in_group("terrain_map") as TileMapLayer
+	if not tm:
+		return
 
-	# convert world corners to minimap space
-	var mini_tl    := _world_to_minimap(world_tl)
-	var mini_br    := _world_to_minimap(world_br)
-	var rect       := Rect2(mini_tl, mini_br - mini_tl)
+	var tl := _world_to_minimap(world_tl, tm)
+	var tr := _world_to_minimap(Vector2(world_br.x, world_tl.y), tm)
+	var br := _world_to_minimap(world_br, tm)
+	var bl := _world_to_minimap(Vector2(world_tl.x, world_br.y), tm)
 
-	draw_rect(rect, VIEWPORT_COLOR, false, VIEWPORT_WIDTH)
+	draw_polyline([tl, tr, br, bl, tl], VIEWPORT_COLOR, VIEWPORT_WIDTH)
 
 
-# ─────────────────────────────────────────
-#  Click to move camera
-# ─────────────────────────────────────────
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			var world_pos := _minimap_to_world(event.position)
-			if camera:
-				camera.global_position = world_pos
+			_move_camera_to(event.position)
 			get_viewport().set_input_as_handled()
 
 	if event is InputEventMouseMotion and event.button_mask & MOUSE_BUTTON_MASK_LEFT:
-		var world_pos := _minimap_to_world(event.position)
-		if camera:
-			camera.global_position = world_pos
+		_move_camera_to(event.position)
 		get_viewport().set_input_as_handled()
 
-
-# ─────────────────────────────────────────
-#  Coordinate conversions
-# ─────────────────────────────────────────
 func _grid_to_minimap(tile: Vector2i) -> Vector2:
-	return Vector2(tile) / float(MAP_SIZE) * MINIMAP_SIZE
+	var half := MINIMAP_SIZE / 2.0
+	# isometric projection: grid x goes right, grid y goes down
+	var fx := float(tile.x) / float(MAP_SIZE)
+	var fy := float(tile.y) / float(MAP_SIZE)
+	return Vector2(
+		(fx - fy) * half + half,
+		(fx + fy) * half
+	)
 
-func _world_to_minimap(world_pos: Vector2) -> Vector2:
-	# direct world → minimap without going through grid
-	# world bounds: x from -32512 to 32768, y from 64 to 32704
-	var world_origin := Vector2(-32512.0, 64.0)
-	var world_size   := Vector2(65280.0, 32640.0)
-	var normalized   := (world_pos - world_origin) / world_size
-	return normalized * MINIMAP_SIZE
 
-func _minimap_to_world(minimap_pos: Vector2) -> Vector2:
-	# minimap pos → grid → world
-	var tile := Vector2i(minimap_pos / MINIMAP_SIZE * float(MAP_SIZE))
-	var tm   := get_tree().get_first_node_in_group("terrain_map") as TileMapLayer
-	if not tm:
-		return Vector2.ZERO
-	return tm.to_global(tm.map_to_local(tile))
+func _minimap_to_grid(minimap_pos: Vector2) -> Vector2i:
+	var half := MINIMAP_SIZE / 2.0
+	var nx   := (minimap_pos.x - half) / half  # -1 to 1
+	var ny   := minimap_pos.y / half            # 0 to 2
+	var fx   := (nx + ny) / 2.0
+	var fy   := (ny - nx) / 2.0
+	return Vector2i(
+		clamp(int(fx * MAP_SIZE), 0, MAP_SIZE - 1),
+		clamp(int(fy * MAP_SIZE), 0, MAP_SIZE - 1)
+	)
+
+
+func _world_to_minimap(world_pos: Vector2, tm: TileMapLayer) -> Vector2:
+	var tile := tm.local_to_map(tm.to_local(world_pos))
+	return _grid_to_minimap(tile)
+
+
+func _move_camera_to(minimap_pos: Vector2) -> void:
+	var tm := get_tree().get_first_node_in_group("terrain_map") as TileMapLayer
+	if not tm or not camera:
+		return
+	var tile               := _minimap_to_grid(minimap_pos)
+	camera.global_position  = tm.to_global(tm.map_to_local(tile))
+	queue_redraw()
+
+func mark_dirty() -> void:
+	queue_redraw()
