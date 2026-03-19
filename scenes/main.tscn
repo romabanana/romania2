@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dk3yiamoh0d0" path="res://scripts/main.gd" id="1_gqmmt"]
 [ext_resource type="Texture2D" uid="uid://c8jn1o6sbm5n6" path="res://assets/tilesets/test_tilest_3.png" id="3_jscy8"]
-[ext_resource type="Shader" uid="uid://b2eebbo6klu8d" path="res://shaders/water.gdshader" id="4_pm3ni"]
 [ext_resource type="Texture2D" uid="uid://3dfsldwpp57x" path="res://maps/map_01_provinces.png" id="5_a8y0u"]
 [ext_resource type="Shader" uid="uid://qyqo0nmj387i" path="res://shaders/faction_map.gdshader" id="6_a8y0u"]
 [ext_resource type="Texture2D" uid="uid://bcbrnvxs7yp36" path="res://assets/tilesets/sat_tileset.png" id="6_og1vs"]
@@ -43,13 +42,6 @@ tile_shape = 1
 tile_layout = 5
 tile_size = Vector2i(256, 128)
 sources/1 = SubResource("TileSetAtlasSource_gqmmt")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5r71p"]
-shader = ExtResource("4_pm3ni")
-shader_parameter/water_color_shallow = Color(0.007843138, 0.27058825, 0.6156863, 1)
-shader_parameter/water_color_deep = Color(0.025218517, 0.20284325, 0.34024277, 1)
-shader_parameter/wave_speed = 1.8800000893
-shader_parameter/wave_scale = 0.12400000589
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yc10j"]
 texture = ExtResource("6_og1vs")
@@ -1013,7 +1005,7 @@ rotation = -0.00030302527
 tile_set = SubResource("TileSet_jcxds")
 
 [node name="Water" type="Polygon2D" parent="." unique_id=280655180]
-material = SubResource("ShaderMaterial_5r71p")
+color = Color(0.10739642, 0.22488013, 0.56978595, 1)
 
 [node name="TopMap" type="TileMapLayer" parent="." unique_id=1622708508]
 y_sort_enabled = true
@@ -1059,6 +1051,7 @@ centered = false
 zoom = Vector2(0.3, 0.3)
 position_smoothing_enabled = true
 script = ExtResource("16_j8jky")
+limit_rect = Rect2(-32512, 64, 65280, 32640)
 
 [node name="crtCanvas" type="CanvasLayer" parent="Camera2D" unique_id=1630225586]
 layer = 2

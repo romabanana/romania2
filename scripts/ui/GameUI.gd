@@ -7,14 +7,14 @@ extends CanvasLayer
 # ─────────────────────────────────────────
 
 const TOP_BAR_HEIGHT    : int = 40
-const BOTTOM_BAR_HEIGHT : int = 256
+const BOTTOM_BAR_HEIGHT : int = 256+30
 const MINIMAP_SIZE      : int = 256
 
 var top_bar      : PanelContainer = null
 var bottom_bar   : PanelContainer = null
 var minimap      : Control        = null
 var context_panel: PanelContainer = null 
-
+var map_toggle : Button = null
 
 func _ready() -> void:
 	layer = 10
@@ -70,16 +70,28 @@ func _build_bottom_bar() -> void:
 	var hbox := HBoxContainer.new()
 	bottom_bar.add_child(hbox)
 
-	# minimap placeholder
-	#minimap = Panel.new()
+	#minimap = Control.new()
 	#minimap.name = "Minimap"
 	#minimap.custom_minimum_size = Vector2(MINIMAP_SIZE, MINIMAP_SIZE)
+	#minimap.set_script(load("res://scripts/ui/Minimap.gd"))
 	#hbox.add_child(minimap)
+	
+	var minimap_container := VBoxContainer.new()
+	minimap_container.add_theme_constant_override("separation", 2)
+	hbox.add_child(minimap_container)
+	
 	minimap = Control.new()
 	minimap.name = "Minimap"
 	minimap.custom_minimum_size = Vector2(MINIMAP_SIZE, MINIMAP_SIZE)
 	minimap.set_script(load("res://scripts/ui/Minimap.gd"))
-	hbox.add_child(minimap)
+	minimap_container.add_child(minimap)
+	
+	map_toggle = Button.new()
+	map_toggle.text = "Political"
+	map_toggle.toggle_mode = true
+	map_toggle.pressed.connect(func(): minimap.toggle_political())
+	minimap_container.add_child(map_toggle)
+
 	
 	# context panel
 	context_panel = PanelContainer.new()

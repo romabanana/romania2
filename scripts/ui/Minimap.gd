@@ -12,11 +12,16 @@ var terrain_poly   : Polygon2D  = null
 var _last_cam_pos  : Vector2    = Vector2.ZERO
 var _last_cam_zoom : Vector2    = Vector2.ONE
 
+var political_poly : Polygon2D = null
+var show_political : bool = false
 
 func _ready() -> void:
 	custom_minimum_size = Vector2(MINIMAP_SIZE, MINIMAP_SIZE)
 	camera = get_tree().get_first_node_in_group("camera")
 	_build_terrain_poly()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_build_political_poly()
 	queue_redraw()
 
 func _build_terrain_poly() -> void:
@@ -134,3 +139,22 @@ func _move_camera_to(minimap_pos: Vector2) -> void:
 
 func mark_dirty() -> void:
 	queue_redraw()
+	
+	
+func _build_political_poly() -> void:
+	political_poly         = Polygon2D.new()
+	political_poly.texture = PoliticalMap.political_texture
+	political_poly.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	political_poly.polygon = terrain_poly.polygon
+	political_poly.uv      = terrain_poly.uv
+	political_poly.modulate = Color(1, 1, 1, 0.6)  # semi transparent
+	political_poly.visible = false
+	political_poly.z_index = 0  # above terrain poly
+	add_child(political_poly)
+
+	FactionManager.province_owner_changed.connect(func(_a, _b):
+		political_poly.texture = PoliticalMap.political_texture)
+
+
+func toggle_political() -> void:
+	political_poly.visible = !political_poly.visible

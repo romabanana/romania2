@@ -19,10 +19,10 @@ func _input(event: InputEvent) -> void:
 		KEY_ALT:
 			if SelectionManager.selected_unit:
 				SelectionManager.selected_unit.cancel_movement()
-		KEY_Q:
+		KEY_PLUS:
 			var camera := get_tree().get_first_node_in_group("camera")
 			camera.zoom_in()
-		KEY_E:
+		KEY_MINUS:
 			var camera := get_tree().get_first_node_in_group("camera")
 			camera.zoom_out()
 		# ── Debug ─────────────────────────

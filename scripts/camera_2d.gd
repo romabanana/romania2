@@ -28,7 +28,7 @@ extends Camera2D
 
 # --- World boundary (optional) ---
 @export var use_limits: bool = true
-@export var limit_rect: Rect2 = Rect2(-35000, -10000, 70000, 50000)
+@export var limit_rect: Rect2 = Rect2(1,1, 1,1)
 
 # ── internal state ──────false────────────────
 var _drag_active: bool = false
