@@ -13,7 +13,7 @@ signal deselected()
 
 # ── State ─────────────────────────────────
 var selected_unit = null
-
+var selected_province= -1
 
 # ─────────────────────────────────────────
 #  Input
@@ -36,10 +36,10 @@ func _unhandled_input(event: InputEvent) -> void:
 				deselect_all()
 		else:
 			# clicked empty tile — select province
-			var province_id := ProvinceManager.get_province_id(clicked_tile)
-			if province_id != -1:
-				province_selected.emit(province_id)
-			deselect_all()
+			selected_province = ProvinceManager.get_province_id(clicked_tile)
+			if selected_province != -1:
+				province_selected.emit(selected_province)
+			_deselect_unit()
 
 	elif event.button_index == MOUSE_BUTTON_RIGHT:
 		if selected_unit != null:
@@ -49,19 +49,23 @@ func _unhandled_input(event: InputEvent) -> void:
 # ─────────────────────────────────────────
 #  Selection
 # ─────────────────────────────────────────
-func _select_unit(unit) -> void:
+func _deselect_unit() -> void:
 	if selected_unit != null:
 		selected_unit.deselect()
+	selected_unit = null
+
+func _select_unit(unit) -> void:
+	_deselect_unit()
 	selected_unit = unit
 	selected_unit.select()
 	unit_selected.emit(unit)
 
 
+
 func deselect_all() -> void:
-	if selected_unit != null:
-		selected_unit.deselect()
-		selected_unit = null
-		deselected.emit()
+	_deselect_unit()
+	selected_province = -1
+	deselected.emit()
 
 
 # ─────────────────────────────────────────
