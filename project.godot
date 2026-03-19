@@ -29,10 +29,18 @@ GameClock="*uid://c6l1i00ho43sn"
 FactionManager="*uid://bc3r5x4oh3ri3"
 PlayerController="*uid://sul6uxt04kr6"
 
+[display]
+
+window/size/viewport_width=1980
+window/size/viewport_height=1080
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=2
 rendering_device/driver.windows="d3d12"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

@@ -7,12 +7,12 @@ extends CanvasLayer
 # ─────────────────────────────────────────
 
 const TOP_BAR_HEIGHT    : int = 40
-const BOTTOM_BAR_HEIGHT : int = 100
+const BOTTOM_BAR_HEIGHT : int = 200
 const MINIMAP_SIZE      : int = 200
 
 var top_bar      : PanelContainer = null
 var bottom_bar   : PanelContainer = null
-var minimap      : Panel          = null
+var minimap      : Control        = null
 var context_panel: PanelContainer = null 
 
 
@@ -63,19 +63,24 @@ func _build_bottom_bar() -> void:
 	bottom_bar.offset_top    = -BOTTOM_BAR_HEIGHT
 	bottom_bar.offset_bottom = 0.0
 	
-	bottom_bar.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-	bottom_bar.custom_minimum_size = Vector2(0, BOTTOM_BAR_HEIGHT)
+	#bottom_bar.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	#bottom_bar.custom_minimum_size = Vector2(0, BOTTOM_BAR_HEIGHT)
 	add_child(bottom_bar)
 
 	var hbox := HBoxContainer.new()
 	bottom_bar.add_child(hbox)
 
 	# minimap placeholder
-	minimap = Panel.new()
+	#minimap = Panel.new()
+	#minimap.name = "Minimap"
+	#minimap.custom_minimum_size = Vector2(MINIMAP_SIZE, MINIMAP_SIZE)
+	#hbox.add_child(minimap)
+	minimap = Control.new()
 	minimap.name = "Minimap"
 	minimap.custom_minimum_size = Vector2(MINIMAP_SIZE, MINIMAP_SIZE)
+	minimap.set_script(load("res://scripts/ui/Minimap.gd"))
 	hbox.add_child(minimap)
-
+	
 	# context panel
 	context_panel = PanelContainer.new()
 	context_panel.name = "ContextPanel"
@@ -84,3 +89,9 @@ func _build_bottom_bar() -> void:
 	hbox.add_child(context_panel)
 	print("viewport size: ", get_viewport().get_visible_rect().size)
 	print("bottom bar position: ", bottom_bar.position)
+
+func toggle_visibility() -> void:
+	top_bar.visible = !top_bar.visible
+	bottom_bar.visible = !bottom_bar.visible
+	minimap.visible = !minimap.visible
+	context_panel.visible = !context_panel.visible 

@@ -997,7 +997,7 @@ shader_parameter/border_color = Color(1, 1, 1, 0.8)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_65sq8"]
 shader = ExtResource("18_fuf3a")
 shader_parameter/curvature = 7.34800020653
-shader_parameter/scanline_strength = 0.1390000066025
+shader_parameter/scanline_strength = 0.0410000019475
 shader_parameter/aberration = 0.0010000000475
 shader_parameter/vignette_strength = 1.0690000507775
 shader_parameter/brightness = 0.678000008455
@@ -1019,6 +1019,7 @@ material = SubResource("ShaderMaterial_5r71p")
 y_sort_enabled = true
 texture_filter = 4
 tile_set = SubResource("TileSet_nxybh")
+collision_enabled = false
 
 [node name="ProvinceSprite" type="Sprite2D" parent="." unique_id=1205479713]
 visible = false
@@ -1054,7 +1055,7 @@ skew = 0.6318091
 texture = ExtResource("12_dp3eg")
 centered = false
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=177332509]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=177332509 groups=["camera"]]
 zoom = Vector2(0.3, 0.3)
 position_smoothing_enabled = true
 script = ExtResource("16_j8jky")
@@ -1123,7 +1124,7 @@ text = "\"Name: —\""
 layout_mode = 2
 text = "\"Name: —\""
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1903985794]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1903985794 groups=["ui"]]
 script = ExtResource("14_jkv2x")
 
 [node name="Debug" type="CanvasLayer" parent="." unique_id=1594789849 groups=["debug_panel"]]

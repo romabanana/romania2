@@ -5,7 +5,7 @@ extends Node
 #  All keyboard input in one place.
 #  Add new bindings in _input()
 # ─────────────────────────────────────────
-
+			
 func _input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed:
 		return
@@ -19,9 +19,18 @@ func _input(event: InputEvent) -> void:
 		KEY_ALT:
 			if SelectionManager.selected_unit:
 				SelectionManager.selected_unit.cancel_movement()
-
+		KEY_Q:
+			var camera := get_tree().get_first_node_in_group("camera")
+			camera.zoom_in()
+		KEY_E:
+			var camera := get_tree().get_first_node_in_group("camera")
+			camera.zoom_out()
 		# ── Debug ─────────────────────────
 		KEY_F1:
 			var panel := get_tree().get_first_node_in_group("debug_panel")
 			if panel:
 				panel.toggle_visibility()
+		KEY_F2:
+			var ui = get_tree().get_first_node_in_group("ui")
+			if ui:
+				ui.toggle_visibility()
