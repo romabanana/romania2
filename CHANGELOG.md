@@ -29,4 +29,3 @@ All notable changes to this project will be documented in this file.
 - World Edition from Main
 - GridManager
 - Minor scripts
-

@@ -1,0 +1,132 @@
+{
+	"008080": {
+		"id": 0,
+		"name": "Province_0",
+		"owner": 0
+	},
+	"0570b0": {
+		"id": 1,
+		"name": "Province_1",
+		"owner": 0
+	},
+	"081d58": {
+		"id": 2,
+		"name": "Province_2",
+		"owner": 0
+	},
+	"0868ac": {
+		"id": 3,
+		"name": "Province_3",
+		"owner": 0
+	},
+	"238b45": {
+		"id": 4,
+		"name": "Province_4",
+		"owner": 0
+	},
+	"253494": {
+		"id": 5,
+		"name": "Province_5",
+		"owner": 0
+	},
+	"35978f": {
+		"id": 6,
+		"name": "Province_6",
+		"owner": 0
+	},
+	"41ae76": {
+		"id": 7,
+		"name": "Province_7",
+		"owner": 0
+	},
+	"4393c3": {
+		"id": 8,
+		"name": "Province_8",
+		"owner": 0
+	},
+	"5aae61": {
+		"id": 9,
+		"name": "Province_9",
+		"owner": 0
+	},
+	"74a9cf": {
+		"id": 10,
+		"name": "Province_10",
+		"owner": 0
+	},
+	"7fcdbb": {
+		"id": 11,
+		"name": "Province_11",
+		"owner": 0
+	},
+	"810f7c": {
+		"id": 12,
+		"name": "Province_12",
+		"owner": 0
+	},
+	"8c510a": {
+		"id": 13,
+		"name": "Province_13",
+		"owner": 0
+	},
+	"99d8c9": {
+		"id": 14,
+		"name": "Province_14",
+		"owner": 0
+	},
+	"abd9e9": {
+		"id": 15,
+		"name": "Province_15",
+		"owner": 0
+	},
+	"ca562c": {
+		"id": 16,
+		"name": "Province_16",
+		"owner": 0
+	},
+	"ccebc5": {
+		"id": 17,
+		"name": "Province_17",
+		"owner": 0
+	},
+	"ccece6": {
+		"id": 18,
+		"name": "Province_18",
+		"owner": 0
+	},
+	"d9f0d3": {
+		"id": 19,
+		"name": "Province_19",
+		"owner": 0
+	},
+	"e31a1c": {
+		"id": 20,
+		"name": "Province_20",
+		"owner": 0
+	},
+	"e5f5f9": {
+		"id": 21,
+		"name": "Province_21",
+		"owner": 0
+	},
+	"ef6548": {
+		"id": 22,
+		"name": "Province_22",
+		"owner": 0
+	},
+	"f46d43": {
+		"id": 23,
+		"name": "Province_23",
+		"owner": 0
+	},
+	"f4a582": {
+		"id": 24,
+		"name": "Province_24",
+		"owner": 0
+	},
+	"ffffff": {
+		"id": 25,
+		"name": "Province_25",
+		"owner": 0
+	}
+}

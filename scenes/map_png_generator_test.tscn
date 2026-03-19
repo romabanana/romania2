@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://c0rmroonygvao"]
+
+[ext_resource type="Script" uid="uid://bicjmy4tojk8f" path="res://scripts/tools/province_generator.gd" id="1_keqxg"]
+[ext_resource type="Script" uid="uid://6yg06fhy6pwb" path="res://scripts/tools/tiles_generator.gd" id="2_fr6j0"]
+
+[node name="MapPngGeneratorTest" type="Node2D" unique_id=711296268]
+
+[node name="Node" type="Node" parent="." unique_id=281551521]
+script = ExtResource("1_keqxg")
+
+[node name="TilesGenerator" type="Node" parent="." unique_id=864514816]
+script = ExtResource("2_fr6j0")
+provinces_png_path = "res://maps/data_provinces.png"

@@ -12,6 +12,7 @@ const TOP_ATLAS_ID := 76
 @onready var top_map     : TileMapLayer = $TopMap
 
 @export var map_path     : String = "res://maps/map_01.dat"
+#@export var map_path     : String = "res://maps/my_map.dat"
 @export var top_map_path : String = "res://maps/top_map_01.dat"
 
 
