@@ -10,14 +10,18 @@ extends Node
 # layer_name → CanvasItem node
 var _layers : Dictionary = {}
 var _shader_params : Dictionary = {}  # "layer_name" → {node, param, default}
+var _default_opacity: Dictionary = {}  # name → float
+
+
 
 
 # ─────────────────────────────────────────
 #  Registration
 # ─────────────────────────────────────────
-func register(layer_name: String, node: CanvasItem) -> void:
-	_layers[layer_name] = node
-	print("VisualManager: registered '%s'" % layer_name)
+func register(layer_name: String, node: CanvasItem, default_opacity: float = 1.0) -> void:
+	_layers[layer_name]          = node
+	_default_opacity[layer_name] = default_opacity
+	print("VisualManager: registered '%s' (opacity %.1f)" % [layer_name, default_opacity])
 
 
 # ─────────────────────────────────────────
@@ -57,6 +61,10 @@ func hide_all() -> void:
 func show_all() -> void:
 	for layer_name in _layers:
 		_layers[layer_name].visible = true
+
+func get_default_opacity(layer_name: String) -> float:
+	return _default_opacity.get(layer_name, 1.0)
+
 
 # Shader
 

@@ -123,15 +123,15 @@ func _register_tweaks() -> void:
 
 	# ── Shader tweaks ────────────────────────
 
-	_tweak("CRT aberration", 0.0, 0.01,
-		func(): return VisualManager.get_shader_param("aberration"),
-		func(v): VisualManager.set_shader_param("aberration", v),
-		0.001)
-
-	_tweak("CRT scanlines", 0.0, 0.5,
-		func(): return VisualManager.get_shader_param("scanlines"),
-		func(v): VisualManager.set_shader_param("scanlines", v),
-		0.01)
+	#_tweak("CRT aberration", 0.0, 0.01,
+		#func(): return VisualManager.get_shader_param("aberration"),
+		#func(v): VisualManager.set_shader_param("aberration", v),
+		#0.001)
+#
+	#_tweak("CRT scanlines", 0.0, 0.5,
+		#func(): return VisualManager.get_shader_param("scanlines"),
+		#func(v): VisualManager.set_shader_param("scanlines", v),
+		#0.01)
 
 	_tweak("MAP border tint", 0.0, 1.0,
 		func(): return VisualManager.get_shader_param("faction_border"),

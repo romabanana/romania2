@@ -11,6 +11,7 @@ const TOP_ATLAS_ID := 76
 @onready var terrain_map : TileMapLayer = $TerrainMap
 @onready var top_map     : TileMapLayer = $TopMap
 
+
 @export var map_path     : String = "res://maps/map_01.dat"
 @export var top_map_path : String = "res://maps/top_map_01.dat"
 
@@ -26,6 +27,8 @@ func _ready() -> void:
 	_setup_water()
 	_register_visuals()
 	
+	terrain_map.rendering_quadrant_size = 64
+	top_map.rendering_quadrant_size = 64
 	# setup unit spawning
 	UnitManager.unit_parent = $Units
 	UnitManager.tilemap     = $TerrainMap
@@ -75,6 +78,7 @@ func _fit_overlay(sprite: Sprite2D, tile_size: int = 1) -> void:
 	var y_axis   := (Vector2(-32512.0, 16384.0) - Vector2(256.0, 0.0)) / png_size
 	sprite.transform = Transform2D(x_axis, y_axis, origin)
 	sprite.modulate  = Color(1, 1, 1, 0.3)
+	print("overlay transform origin: ", origin, " x: ", x_axis, " y: ", y_axis)
 
 
 func _setup_water() -> void:
@@ -95,12 +99,17 @@ func _setup_water() -> void:
 
 
 func _register_visuals() -> void:
-	VisualManager.register("water",    $Water)
-	VisualManager.register("province", $ProvinceSprite)
-	VisualManager.register("political",$PoliticalMap)
-	VisualManager.register("border",   $BorderMap)
+	VisualManager.register("water",    $Water,        1.0)
+	VisualManager.register("province", $ProvinceSprite, 0.3)
+	VisualManager.register("political",$PoliticalMap,  0.3)
+	VisualManager.register("border",   $BorderMap,    0.3)
 	VisualManager.register_shader("aberration",  $Camera2D/crtCanvas/CRT, "aberration",       0.005)
 	VisualManager.register_shader("scanlines",   $Camera2D/crtCanvas/CRT, "scanline_strength", 0.2)
 	VisualManager.register_shader("faction_border",   $PoliticalMap, "border_strength", 0.9)
 	VisualManager.register_shader("faction_color",   $PoliticalMap, "inner_strength", 0.2)
 	VisualManager.register_shader("water_border",   $PoliticalMap, "water_border_strength", 0.5)
+	
+	# setup LOD sprite
+	_fit_overlay($TerrainLOD, 8)
+	$TerrainLOD.visible = false
+	$TerrainLOD.modulate = Color(1,1,1,1)

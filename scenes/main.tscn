@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dk3yiamoh0d0" path="res://scripts/main.gd" id="1_gqmmt"]
 [ext_resource type="Texture2D" uid="uid://c8jn1o6sbm5n6" path="res://assets/tilesets/test_tilest_3.png" id="3_jscy8"]
+[ext_resource type="Texture2D" uid="uid://cgrtt48qgvsxn" path="res://assets/textures/lod.png" id="4_jkv2x"]
 [ext_resource type="Texture2D" uid="uid://3dfsldwpp57x" path="res://maps/map_01_provinces.png" id="5_a8y0u"]
 [ext_resource type="Shader" uid="uid://qyqo0nmj387i" path="res://shaders/faction_map.gdshader" id="6_a8y0u"]
 [ext_resource type="Texture2D" uid="uid://bcbrnvxs7yp36" path="res://assets/tilesets/sat_tileset.png" id="6_og1vs"]
@@ -11,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://qb28uwu154x7" path="res://maps/map_01_provinces_4096.png" id="13_gqmmt"]
 [ext_resource type="Script" uid="uid://dyjk8nlrvi6mo" path="res://scripts/ui/GameUI.gd" id="14_jkv2x"]
 [ext_resource type="Script" uid="uid://dj6gjhuc1ci5g" path="res://scripts/camera_2d.gd" id="16_j8jky"]
-[ext_resource type="Shader" uid="uid://ddmjbifcoltas" path="res://shaders/crt.gdshader" id="18_fuf3a"]
 [ext_resource type="Script" uid="uid://sytpndouud54" path="res://scripts/selection_panel.gd" id="20_c6pm6"]
 [ext_resource type="Script" uid="uid://tglgwhkkc5lv" path="res://scenes/DebugPanel.gd" id="20_gqmmt"]
 
@@ -986,41 +986,34 @@ shader_parameter/province_texture = ExtResource("13_gqmmt")
 shader_parameter/border_width = 0.36400001566006
 shader_parameter/border_color = Color(1, 1, 1, 0.8)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_65sq8"]
-shader = ExtResource("18_fuf3a")
-shader_parameter/curvature = 7.34800020653
-shader_parameter/scanline_strength = 0.0410000019475
-shader_parameter/aberration = 0.0010000000475
-shader_parameter/vignette_strength = 1.0690000507775
-shader_parameter/brightness = 0.678000008455
-
 [node name="main" type="Node2D" unique_id=1756274839]
 script = ExtResource("1_gqmmt")
 
 [node name="TerrainMap" type="TileMapLayer" parent="." unique_id=24524992 groups=["terrain_map"]]
+visible = false
 y_sort_enabled = true
 use_parent_material = true
 position = Vector2(-0.99999905, 3)
 rotation = -0.00030302527
 tile_set = SubResource("TileSet_jcxds")
+collision_enabled = false
 
 [node name="Water" type="Polygon2D" parent="." unique_id=280655180]
 color = Color(0.10739642, 0.22488013, 0.56978595, 1)
 
-[node name="TopMap" type="TileMapLayer" parent="." unique_id=1622708508]
+[node name="TopMap" type="TileMapLayer" parent="." unique_id=1622708508 groups=["top_map"]]
 y_sort_enabled = true
 texture_filter = 4
 tile_set = SubResource("TileSet_nxybh")
 collision_enabled = false
 
+[node name="TerrainLOD" type="Sprite2D" parent="." unique_id=201865829 groups=["terrain_lod"]]
+texture = ExtResource("4_jkv2x")
+centered = false
+
 [node name="ProvinceSprite" type="Sprite2D" parent="." unique_id=1205479713]
-visible = false
 modulate = Color(0.58431375, 0.58431375, 0.58431375, 0.5254902)
 texture_filter = 1
-position = Vector2(130.1557, 3.875494)
-rotation = 0.47123888
-scale = Vector2(141.58891, 141.31812)
-skew = 0.6318091
 texture = ExtResource("5_a8y0u")
 centered = false
 
@@ -1055,10 +1048,11 @@ limit_rect = Rect2(-32512, 64, 65280, 32640)
 
 [node name="crtCanvas" type="CanvasLayer" parent="Camera2D" unique_id=1630225586]
 layer = 2
+visible = false
 
 [node name="CRT" type="ColorRect" parent="Camera2D/crtCanvas" unique_id=1419177382]
+visible = false
 visibility_layer = 513
-material = SubResource("ShaderMaterial_65sq8")
 clip_contents = true
 custom_minimum_size = Vector2(1200, 1200)
 anchors_preset = 15
