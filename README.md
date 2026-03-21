@@ -1,5 +1,5 @@
 ### 🏝️🏝️Legendary Game in Construction🏝️🏝️
-![game pic](/assets/demo.png)
+![game pic](/assets/demo_2.png)
 
 
 
