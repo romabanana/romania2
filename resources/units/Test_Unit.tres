@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="UnitData" format=3 uid="uid://dl6k2ulu4wx10"]
+
+[ext_resource type="Script" uid="uid://c8qcasjxbijal" path="res://scripts/unit_data.gd" id="1_wksf0"]
+
+[resource]
+script = ExtResource("1_wksf0")
+unit_id = "0"
+unit_name = "Test_Gorilla"
+rank = 3
+metadata/_custom_type_script = "uid://c8qcasjxbijal"

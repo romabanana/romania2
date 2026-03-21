@@ -9,12 +9,17 @@ extends Node2D
 
 @export var move_speed : float = 2.0
 
+@export var unit_data : UnitData = null
+
 var current_tile      : Vector2i        = Vector2i(0, 0)
 var path              : Array[Vector2i] = []
 var pending_path      : Array[Vector2i] = []
 var is_selected       : bool            = false
 var is_moving         : bool            = false
 var hours_accumulated : float           = 0.0
+
+# Unit UI
+@onready var unit_card : UnitCard = $UnitCard
 
 @onready var sprite           : Sprite2D = $Sprite2D
 @onready var selection_circle : Node2D   = $SelectionCircle
@@ -31,6 +36,23 @@ func _ready() -> void:
 	sprite.scale = Vector2(0.4, 0.4)
 	GameClock.tick.connect(_on_tick)
 	_build_path_line()
+	
+	#unit_card.scale = Vector2(0.4, 0.4)
+	
+	# Initialize unit data if not set
+	if not unit_data:
+		var data_file_path = "res://resources/units/Test_Unit.tres"
+		if FileAccess.file_exists(data_file_path):
+			var data = load(data_file_path)
+			unit_data = data
+			print("Unit: Default UnitData loaded")
+			
+			unit_card.set_unit(unit_data)
+		else:
+			print("Unit: No resource found in: ", data_file_path)
+		#unit_data = UnitData.new()
+		#unit_data.unit_name = "Test Unit"
+		#unit_data.unit_type = UnitData.UnitType.INFANTRY
 
 	await get_tree().process_frame
 	# add to tilemap not to self
