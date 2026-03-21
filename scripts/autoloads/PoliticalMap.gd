@@ -13,7 +13,8 @@ var political_image   : Image        = null
 var political_texture : ImageTexture = null
 var political_sprite  : Sprite2D     = null
 
-
+# ── bake ───────────────────────────────
+var bake_viewport : SubViewport = null
 # ─────────────────────────────────────────
 #  Init
 # ─────────────────────────────────────────
@@ -22,7 +23,8 @@ func setup(sprite: Sprite2D, map_size_input: int = 256) -> void:
 	map_size         = map_size_input
 
 	_build_texture()
-
+	# bake
+	_bake()
 	# listen to ownership changes
 	FactionManager.province_owner_changed.connect(_on_ownership_changed)
 
@@ -61,7 +63,8 @@ func _on_ownership_changed(province_id: int, faction_id: int) -> void:
 		color = Color(0, 0, 0, 0)
 
 	_paint_province_pixels(province_id, color)
-
+	# rebake after paint
+	_bake()
 
 func _paint_province_pixels(province_id: int, color: Color) -> void:
 	var tiles := ProvinceManager.get_province_tiles(province_id)
@@ -80,3 +83,34 @@ func show_overlay(value: bool) -> void:
 func toggle_overlay() -> void:
 	if political_sprite:
 		political_sprite.visible = !political_sprite.visible
+		
+	
+# ─────────────────────────────────────────
+#  Bake
+# ─────────────────────────────────────────
+func _bake() -> void:
+
+	if not bake_viewport:
+		bake_viewport = SubViewport.new()
+		bake_viewport.size = Vector2i(256, 256)
+		bake_viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
+		bake_viewport.transparent_bg = true
+		
+		var bake_sprite := Sprite2D.new()
+		bake_sprite.texture = political_texture
+		bake_sprite.material = political_sprite.material  # the edge glow shader
+		
+		bake_sprite.centered = false
+		bake_viewport.add_child(bake_sprite)
+		political_sprite.get_parent().add_child(bake_viewport)
+	
+	bake_viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
+	
+	await Engine.get_main_loop().process_frame
+
+	var img := bake_viewport.get_texture().get_image()
+	var baked_texture := ImageTexture.create_from_image(img)
+
+	political_sprite.texture  = baked_texture
+	political_sprite.material = null
+	bake_viewport.queue_free()

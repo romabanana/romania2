@@ -123,28 +123,42 @@ func _register_tweaks() -> void:
 
 	# ── Shader tweaks ────────────────────────
 
-	#_tweak("CRT aberration", 0.0, 0.01,
-		#func(): return VisualManager.get_shader_param("aberration"),
-		#func(v): VisualManager.set_shader_param("aberration", v),
-		#0.001)
-#
-	#_tweak("CRT scanlines", 0.0, 0.5,
-		#func(): return VisualManager.get_shader_param("scanlines"),
-		#func(v): VisualManager.set_shader_param("scanlines", v),
-		#0.01)
+	_toggle("CRT",
+			func(): return VisualManager.is_visible("crt"),
+			func(v): VisualManager.set_visible("crt", v))
 
-	_tweak("MAP border tint", 0.0, 1.0,
-		func(): return VisualManager.get_shader_param("faction_border"),
-		func(v): VisualManager.set_shader_param("faction_border", v),
+	_tweak("CRT curvature", 3.0, 10.0,
+		func(): return VisualManager.get_shader_param("curvature"),
+		func(v): VisualManager.set_shader_param("curvature", v),
+		0.25)
+
+	_tweak("CRT aberration", 0.0, 0.01,
+		func(): return VisualManager.get_shader_param("aberration"),
+		func(v): VisualManager.set_shader_param("aberration", v),
+		0.001)
+
+	_tweak("CRT scanlines", 0.0, 0.5,
+		func(): return VisualManager.get_shader_param("scanlines"),
+		func(v): VisualManager.set_shader_param("scanlines", v),
+		0.01)
+
+	_tweak("CRT brightness", 0.5, 2.0,
+		func(): return VisualManager.get_shader_param("brightness"),
+		func(v): VisualManager.set_shader_param("brightness", v),
 		0.1)
-	_tweak("MAP inner tint", 0.0, 1.0,
-		func(): return VisualManager.get_shader_param("faction_color"),
-		func(v): VisualManager.set_shader_param("faction_color", v),
-		0.1)
-	_tweak("MAP water border tint", 0.0, 1.0,
-		func(): return VisualManager.get_shader_param("water_border"),
-		func(v): VisualManager.set_shader_param("water_border", v),
-		0.1)
+
+	#_tweak("MAP border tint", 0.0, 1.0,
+		#func(): return VisualManager.get_shader_param("faction_border"),
+		#func(v): VisualManager.set_shader_param("faction_border", v),
+		#0.1)
+	#_tweak("MAP inner tint", 0.0, 1.0,
+		#func(): return VisualManager.get_shader_param("faction_color"),
+		#func(v): VisualManager.set_shader_param("faction_color", v),
+		#0.1)
+	#_tweak("MAP water border tint", 0.0, 1.0,
+		#func(): return VisualManager.get_shader_param("water_border"),
+		#func(v): VisualManager.set_shader_param("water_border", v),
+		#0.1)
 
 # ─────────────────────────────────────────
 #  Toggle visibility

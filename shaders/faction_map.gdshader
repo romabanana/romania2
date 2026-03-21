@@ -1,8 +1,8 @@
 shader_type canvas_item;
 
 uniform float border_strength      : hint_range(0.0, 1.0) = 0.9;
-uniform float inner_strength       : hint_range(0.0, 1.0) = 0.15;
-uniform float water_border_strength: hint_range(0.0, 1.0) = 0.5;
+uniform float inner_strength       : hint_range(0.0, 1.0) = 0.3;
+uniform float water_border_strength: hint_range(0.0, 1.0) = 0.9;
 uniform float border_width         : hint_range(1.0, 5.0)  = 1.0;
 
 void fragment() {
@@ -50,5 +50,5 @@ void fragment() {
 	opacity = mix(opacity, water_border_strength, water_edge);
 	opacity = mix(opacity, border_strength, province_edge);
 
-	COLOR = vec4(col.rgb, col.a * opacity);
+	COLOR = vec4(col.rgb, col.a);
 }

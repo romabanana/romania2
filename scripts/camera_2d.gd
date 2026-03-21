@@ -14,8 +14,8 @@ extends Camera2D
 
 # --- Zoom settings ---
 @export var zoom_speed    : float = 0.05
-@export var zoom_min      : float = 0.1
-@export var zoom_max      : float = 1.0
+@export var zoom_min      : float = 0.01 
+@export var zoom_max      : float = 2.0
 @export var zoom_smoothing: float = 5.0
 
 # --- World boundary ---
@@ -29,6 +29,11 @@ var _cam_origin   : Vector2 = Vector2.ZERO
 var _target_zoom  : Vector2 = Vector2.ONE
 
 
+
+# to this — only notify when zoom actually changes significantly:
+# or call it in _process instead:
+var _last_reported_zoom : float = 1.0
+
 func _ready() -> void:
 	_target_zoom = zoom
 
@@ -40,6 +45,10 @@ func _process(delta: float) -> void:
 	_handle_zoom_smoothing(delta)
 	if use_limits:
 		_clamp_to_limits()
+	# notify LOD with actual zoom, not target
+	if abs(zoom.x - _last_reported_zoom) > 0.002:
+		_last_reported_zoom = zoom.x
+		LODManager.on_zoom_changed(zoom.x)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -99,8 +108,9 @@ func _zoom_toward(screen_pos: Vector2, direction: int) -> void:
 	var world_before := screen_to_world(screen_pos, old_zoom)
 	var world_after  := screen_to_world(screen_pos, _target_zoom)
 	global_position  += world_before - world_after
-
-	LODManager.on_zoom_changed(_target_zoom.x)
+	
+	#LODManager.on_zoom_changed(_target_zoom.x)
+	#LODManager.on_zoom_changed(_target_zoom.x)
 
 func _handle_zoom_smoothing(delta: float) -> void:
 	if zoom_smoothing > 0.0:

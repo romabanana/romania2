@@ -2,7 +2,8 @@ shader_type canvas_item;
 
 uniform sampler2D province_texture;
 uniform float border_width : hint_range(0.05, 5.0) = 1.0;
-uniform vec4 border_color : source_color = vec4(0.0, 0.0, 0.0, 0.8);
+uniform vec4 border_color : source_color = vec4(0.0, 0.0, 0.0, 1);
+
 
 void fragment() {
     vec2 px = vec2(border_width) / vec2(textureSize(province_texture, 0));

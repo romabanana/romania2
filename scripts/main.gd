@@ -6,10 +6,13 @@ extends Node
 # ─────────────────────────────────────────
 
 const ATLAS_ID     := 1
-const TOP_ATLAS_ID := 76
+const TOP_ATLAS_ID := 76 #Old 256x256 tile tex
+const TOP_ATLAS_LOD_ID := 0
 
 @onready var terrain_map : TileMapLayer = $TerrainMap
-@onready var top_map     : TileMapLayer = $TopMap
+@onready var top_map : TileMapLayer = $TopMap_half
+@onready var top_map_lod_1 : TileMapLayer = $TopMap_quarter
+@onready var top_map_lod_2 : TileMapLayer = $TopMap_octave
 
 
 @export var map_path     : String = "res://maps/map_01.dat"
@@ -26,9 +29,7 @@ func _ready() -> void:
 	_setup_overlays()
 	_setup_water()
 	_register_visuals()
-	
-	terrain_map.rendering_quadrant_size = 64
-	top_map.rendering_quadrant_size = 64
+	await _bake_border()
 	# setup unit spawning
 	UnitManager.unit_parent = $Units
 	UnitManager.tilemap     = $TerrainMap
@@ -36,6 +37,9 @@ func _ready() -> void:
 	# spawn test units
 	UnitManager.spawn(Vector2i(25, 84), 1)   # player unit
 	UnitManager.spawn(Vector2i(25, 85), 2) # enemy unit
+	
+	# 
+	FactionManager.capture_province(19,1)
 	
 	
 
@@ -60,7 +64,9 @@ func _load() -> void:
 	top_file.close()
 	top_map.clear()
 	for cell in top_data:
-		top_map.set_cell(cell, TOP_ATLAS_ID, top_data[cell])
+		top_map.set_cell(cell, TOP_ATLAS_LOD_ID, top_data[cell]) #128px tile
+		top_map_lod_1.set_cell(cell, TOP_ATLAS_LOD_ID, top_data[cell]) #64px tile
+		top_map_lod_2.set_cell(cell, TOP_ATLAS_LOD_ID, top_data[cell]) #32px tile
 
 	print("Main: maps loaded")
 
@@ -77,7 +83,7 @@ func _fit_overlay(sprite: Sprite2D, tile_size: int = 1) -> void:
 	var x_axis   := Vector2(32768.0, 16384.0) / png_size
 	var y_axis   := (Vector2(-32512.0, 16384.0) - Vector2(256.0, 0.0)) / png_size
 	sprite.transform = Transform2D(x_axis, y_axis, origin)
-	sprite.modulate  = Color(1, 1, 1, 0.3)
+	sprite.modulate  = Color(1, 1, 1, 0.2)
 	print("overlay transform origin: ", origin, " x: ", x_axis, " y: ", y_axis)
 
 
@@ -101,15 +107,52 @@ func _setup_water() -> void:
 func _register_visuals() -> void:
 	VisualManager.register("water",    $Water,        1.0)
 	VisualManager.register("province", $ProvinceSprite, 0.3)
-	VisualManager.register("political",$PoliticalMap,  0.3)
+	VisualManager.register("political",$PoliticalMap,  0.2)
 	VisualManager.register("border",   $BorderMap,    0.3)
+
+	VisualManager.register("crt", $Camera2D/crtCanvas/CRT, 1.0)
+	VisualManager.register_shader("curvature",   $Camera2D/crtCanvas/CRT, "curvature", 8.0)
 	VisualManager.register_shader("aberration",  $Camera2D/crtCanvas/CRT, "aberration",       0.005)
 	VisualManager.register_shader("scanlines",   $Camera2D/crtCanvas/CRT, "scanline_strength", 0.2)
-	VisualManager.register_shader("faction_border",   $PoliticalMap, "border_strength", 0.9)
-	VisualManager.register_shader("faction_color",   $PoliticalMap, "inner_strength", 0.2)
-	VisualManager.register_shader("water_border",   $PoliticalMap, "water_border_strength", 0.5)
+	VisualManager.register_shader("brightness",   $Camera2D/crtCanvas/CRT, "brightness", 0.5)
+#	VisualManager.register_shader("faction_border",   $PoliticalMap, "border_strength", 0.9)
+#	VisualManager.register_shader("faction_color",   $PoliticalMap, "inner_strength", 0.2)
+#	VisualManager.register_shader("water_border",   $PoliticalMap, "water_border_strength", 0.5)
 	
 	# setup LOD sprite
 	_fit_overlay($TerrainLOD, 8)
 	$TerrainLOD.visible = false
 	$TerrainLOD.modulate = Color(1,1,1,1)
+
+func _bake_border() -> void:
+	var border_sprite := $BorderMap as Sprite2D
+	if not border_sprite:
+		return
+	# fix opacitiy
+	border_sprite.modulate       = Color(1, 1, 1, 0.9)
+	
+	var bake_viewport := SubViewport.new()
+	bake_viewport.size = Vector2i(4096, 4096)
+	bake_viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
+	bake_viewport.transparent_bg = true
+	add_child(bake_viewport)
+
+	var bake_rect := TextureRect.new()
+	
+	bake_rect.texture        = border_sprite.texture
+	bake_rect.material       = border_sprite.material
+	bake_rect.size           = Vector2(4096, 4096)
+	bake_rect.position       = Vector2.ZERO
+	bake_viewport.add_child(bake_rect)
+
+	# wait two frames for SubViewport to render
+	await get_tree().process_frame
+	await get_tree().process_frame
+	# convert to ImageTexture before freeing viewport
+	var img := bake_viewport.get_texture().get_image()
+	var baked_texture := ImageTexture.create_from_image(img)
+
+	border_sprite.texture  = baked_texture  # now a real ImageTexture, not ViewportTexture
+	border_sprite.material = null
+	bake_viewport.queue_free()
+	print("Border baked")
