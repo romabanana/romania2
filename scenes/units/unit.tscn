@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dq7rknxtbboj3" path="res://scripts/unit.gd" id="1_qgilm"]
 [ext_resource type="Texture2D" uid="uid://d3yl03ababqk2" path="res://assets/images/gorillas/Gorilla.jpg" id="2_6e3tn"]
+[ext_resource type="PackedScene" uid="uid://bslll0p3xy6ad" path="res://scenes/ui/UnitCard.tscn" id="3_cx6aj"]
 
 [node name="Unit" type="Node2D" unique_id=843503975]
 script = ExtResource("1_qgilm")
@@ -10,3 +11,9 @@ script = ExtResource("1_qgilm")
 texture = ExtResource("2_6e3tn")
 
 [node name="SelectionCircle" type="Node2D" parent="." unique_id=1870206773]
+
+[node name="UnitCard" parent="." unique_id=732659176 instance=ExtResource("3_cx6aj")]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 500.0
+offset_bottom = 190.0

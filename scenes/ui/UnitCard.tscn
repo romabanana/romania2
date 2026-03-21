@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://bslll0p3xy6ad"]
+
+[ext_resource type="Script" uid="uid://cxr0bo5kw14in" path="res://scripts/unit_card.gd" id="1_ig1yn"]
+[ext_resource type="Texture2D" uid="uid://d3yl03ababqk2" path="res://assets/images/gorillas/Gorilla.jpg" id="1_q7410"]
+
+[node name="UnitCard" type="PanelContainer" unique_id=732659176]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -95.0
+offset_right = 250.0
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ig1yn")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1221044088]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=590144345]
+layout_mode = 2
+
+[node name="HeaderRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1448531]
+layout_mode = 2
+
+[node name="UnitIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/HeaderRow" unique_id=179637994]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("1_q7410")
+expand_mode = 2
+
+[node name="UnitInfo" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HeaderRow" unique_id=95654182]
+custom_minimum_size = Vector2(264, 0)
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer/HeaderRow/UnitInfo" unique_id=1764971912]
+layout_mode = 2
+text = "Unit_Name_Test"
+
+[node name="RankLabel" type="Label" parent="MarginContainer/VBoxContainer/HeaderRow/UnitInfo" unique_id=1723506391]
+layout_mode = 2
+text = "Unit_Rank_Test"
+
+[node name="FactionIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/HeaderRow" unique_id=1326794349]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("1_q7410")
+expand_mode = 2
+
+[node name="VetIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/HeaderRow" unique_id=543908634]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("1_q7410")
+expand_mode = 2
+
+[node name="TypeIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/HeaderRow" unique_id=203121443]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("1_q7410")
+expand_mode = 2
+
+[node name="StatusRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=350335726]
+layout_mode = 2
+
+[node name="StatusIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/StatusRow" unique_id=193535540]
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/VBoxContainer/StatusRow" unique_id=1042669255]
+layout_mode = 2
+
+[node name="BarsContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1031339215]
+layout_mode = 2
+
+[node name="HPContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BarsContainer" unique_id=1322372427]
+layout_mode = 2
+
+[node name="HPBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/BarsContainer/HPContainer" unique_id=37632187]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="HPLabel" type="Label" parent="MarginContainer/VBoxContainer/BarsContainer/HPContainer" unique_id=256910934]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="OrgContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BarsContainer" unique_id=2144869173]
+layout_mode = 2
+
+[node name="OrgBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/BarsContainer/OrgContainer" unique_id=1339700541]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="OrgLabel" type="Label" parent="MarginContainer/VBoxContainer/BarsContainer/OrgContainer" unique_id=1768473484]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="SupplyContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BarsContainer" unique_id=1794059366]
+layout_mode = 2
+
+[node name="SupplyBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/BarsContainer/SupplyContainer" unique_id=1078239001]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="SupplyLabel" type="Label" parent="MarginContainer/VBoxContainer/BarsContainer/SupplyContainer" unique_id=2026332647]
+layout_mode = 2
+size_flags_horizontal = 10
