@@ -13,6 +13,7 @@
 [ext_resource type="Shader" uid="uid://bqwvmr70gnsi2" path="res://shaders/border.gdshader" id="12_tel4y"]
 [ext_resource type="Texture2D" uid="uid://qb28uwu154x7" path="res://maps/map_01_provinces_4096.png" id="13_gqmmt"]
 [ext_resource type="Script" uid="uid://dyjk8nlrvi6mo" path="res://scripts/ui/GameUI.gd" id="14_jkv2x"]
+[ext_resource type="Shader" uid="uid://ddmjbifcoltas" path="res://shaders/crt.gdshader" id="15_dp3eg"]
 [ext_resource type="Texture2D" uid="uid://70b1i8lhdklt" path="res://assets/tilesets/sat_tileset_x2.png" id="15_jkv2x"]
 [ext_resource type="Script" uid="uid://dj6gjhuc1ci5g" path="res://scripts/camera_2d.gd" id="16_j8jky"]
 [ext_resource type="Script" uid="uid://sytpndouud54" path="res://scripts/selection_panel.gd" id="20_c6pm6"]
@@ -2203,6 +2204,14 @@ shader_parameter/province_texture = ExtResource("13_gqmmt")
 shader_parameter/border_width = 0.65500002948256
 shader_parameter/border_color = Color(1, 1, 1, 0.8)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gqmmt"]
+shader = ExtResource("15_dp3eg")
+shader_parameter/curvature = 7.3930002086675
+shader_parameter/scanline_strength = 0.12
+shader_parameter/aberration = 0.002
+shader_parameter/vignette_strength = 0.0
+shader_parameter/brightness = 0.5
+
 [node name="main" type="Node2D" unique_id=1756274839]
 script = ExtResource("1_gqmmt")
 
@@ -2282,11 +2291,11 @@ limit_rect = Rect2(-32512, 64, 65280, 32640)
 
 [node name="crtCanvas" type="CanvasLayer" parent="Camera2D" unique_id=1630225586]
 layer = 2
-visible = false
 
 [node name="CRT" type="ColorRect" parent="Camera2D/crtCanvas" unique_id=1419177382]
 visible = false
 visibility_layer = 513
+material = SubResource("ShaderMaterial_gqmmt")
 clip_contents = true
 custom_minimum_size = Vector2(1200, 1200)
 anchors_preset = 15

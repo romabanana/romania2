@@ -70,6 +70,11 @@ func _apply(state: State) -> void:
 			_set_group("top_map_lod_1",  false)
 			_set_group("top_map_lod_2",  true)
 			_set_group("terrain_lod",     false)
+			var political := VisualManager.get_layer("political")
+			if political:
+				print("political alpha before fade: ", political.modulate.a)
+				_fade(political, true, 0.3, 0.3)
+				print("political alpha after fade call: ", political.modulate.a)
 
 		State.FAR:
 			_set_group("terrain_map",     false)
@@ -77,6 +82,9 @@ func _apply(state: State) -> void:
 			_set_group("top_map_lod_1",  false)
 			_set_group("top_map_lod_2",  false)
 			_set_group("terrain_lod",     true)
+			var political := VisualManager.get_layer("political")
+			if political:
+				_fade(political, true, 2.0, 0.99)  # higher opacity at far zoom
 
 
 # ─────────────────────────────────────────
@@ -102,11 +110,11 @@ func _set_overlay(layer_name: String, value: bool, duration: float = 1) -> void:
 func _fade(node: CanvasItem, value: bool, duration: float = 0.3, target_opacity: float = 1.0) -> void:
 	if not node:
 		return
-	if value and node.visible and node.modulate.a >= target_opacity - 0.01:
+	# skip only if already exactly at target state
+	if value and node.visible and abs(node.modulate.a - target_opacity) < 0.01:
 		return
 	if not value and not node.visible:
 		return
-
 	# kill existing tween for this node
 	var id := node.get_instance_id()
 	if _tweens.has(id) and is_instance_valid(_tweens[id]):

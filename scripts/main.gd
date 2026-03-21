@@ -107,10 +107,14 @@ func _setup_water() -> void:
 func _register_visuals() -> void:
 	VisualManager.register("water",    $Water,        1.0)
 	VisualManager.register("province", $ProvinceSprite, 0.3)
-	VisualManager.register("political",$PoliticalMap,  0.3)
+	VisualManager.register("political",$PoliticalMap,  0.2)
 	VisualManager.register("border",   $BorderMap,    0.3)
-#	VisualManager.register_shader("aberration",  $Camera2D/crtCanvas/CRT, "aberration",       0.005)
-#	VisualManager.register_shader("scanlines",   $Camera2D/crtCanvas/CRT, "scanline_strength", 0.2)
+
+	VisualManager.register("crt", $Camera2D/crtCanvas/CRT, 1.0)
+	VisualManager.register_shader("curvature",   $Camera2D/crtCanvas/CRT, "curvature", 8.0)
+	VisualManager.register_shader("aberration",  $Camera2D/crtCanvas/CRT, "aberration",       0.005)
+	VisualManager.register_shader("scanlines",   $Camera2D/crtCanvas/CRT, "scanline_strength", 0.2)
+	VisualManager.register_shader("brightness",   $Camera2D/crtCanvas/CRT, "brightness", 0.5)
 #	VisualManager.register_shader("faction_border",   $PoliticalMap, "border_strength", 0.9)
 #	VisualManager.register_shader("faction_color",   $PoliticalMap, "inner_strength", 0.2)
 #	VisualManager.register_shader("water_border",   $PoliticalMap, "water_border_strength", 0.5)
