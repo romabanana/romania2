@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfe6y3p1a6j2q"
-path.s3tc="res://.godot/imported/border_map_4096.png-be85ada76872e7994bb1b74ffa813f89.s3tc.ctex"
+uid="uid://70b1i8lhdklt"
+path.s3tc="res://.godot/imported/sat_tileset_x2.png-dbc4b45aa600c9515e31a39416dae977.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://maps/border_map_4096.png"
-dest_files=["res://.godot/imported/border_map_4096.png-be85ada76872e7994bb1b74ffa813f89.s3tc.ctex"]
+source_file="res://assets/tilesets/sat_tileset_x2.png"
+dest_files=["res://.godot/imported/sat_tileset_x2.png-dbc4b45aa600c9515e31a39416dae977.s3tc.ctex"]
 
 [params]
 

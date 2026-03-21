@@ -133,18 +133,18 @@ func _register_tweaks() -> void:
 		#func(v): VisualManager.set_shader_param("scanlines", v),
 		#0.01)
 
-	_tweak("MAP border tint", 0.0, 1.0,
-		func(): return VisualManager.get_shader_param("faction_border"),
-		func(v): VisualManager.set_shader_param("faction_border", v),
-		0.1)
-	_tweak("MAP inner tint", 0.0, 1.0,
-		func(): return VisualManager.get_shader_param("faction_color"),
-		func(v): VisualManager.set_shader_param("faction_color", v),
-		0.1)
-	_tweak("MAP water border tint", 0.0, 1.0,
-		func(): return VisualManager.get_shader_param("water_border"),
-		func(v): VisualManager.set_shader_param("water_border", v),
-		0.1)
+	#_tweak("MAP border tint", 0.0, 1.0,
+		#func(): return VisualManager.get_shader_param("faction_border"),
+		#func(v): VisualManager.set_shader_param("faction_border", v),
+		#0.1)
+	#_tweak("MAP inner tint", 0.0, 1.0,
+		#func(): return VisualManager.get_shader_param("faction_color"),
+		#func(v): VisualManager.set_shader_param("faction_color", v),
+		#0.1)
+	#_tweak("MAP water border tint", 0.0, 1.0,
+		#func(): return VisualManager.get_shader_param("water_border"),
+		#func(v): VisualManager.set_shader_param("water_border", v),
+		#0.1)
 
 # ─────────────────────────────────────────
 #  Toggle visibility
